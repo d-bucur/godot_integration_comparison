@@ -1,5 +1,6 @@
 extends Node
 
+@export var method_name: String
 @export var target: Node2D
 @export var finish_line: Node2D
 ## physics_ticks_per_second value
@@ -30,11 +31,10 @@ func _physics_process(_delta: float) -> void:
 
 func _on_finished():
 	var t = Time.get_ticks_msec() - time_started
-	var t_error = abs(float(expected_time - t)) / expected_time
-	# print("fps: %d" % fps)
-	print("tps: %d" % tps)
-	print("jump time: %f" % t)
-	print("time error: %f" % t_error)
-	print("max_x: %f" % max_x)
-	print("max_y: %f" % max_y)
+	# var t_error = abs(float(expected_time - t)) / expected_time
+	print("|-----------------|-----|-------|---------|---------|
+| method          | tps | max_x | min_y   | time    |
+|-----------------|-----|-------|---------|---------|
+| %s      | %d | %.1f | %.1f | %d |" % [method_name, tps, max_x, max_y, t])
 	is_stopped = true
+	target.sleeping = true
