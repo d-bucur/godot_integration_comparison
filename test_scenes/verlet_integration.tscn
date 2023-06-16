@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu12a2itid7cm"]
+
+[ext_resource type="Script" path="res://verlet_integrator.gd" id="1_0r0r6"]
+[ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_ojjr4"]
+[ext_resource type="Script" path="res://test_monitor.gd" id="2_rs303"]
+[ext_resource type="PackedScene" uid="uid://dpfh0i55mrxd8" path="res://ground.tscn" id="3_nl3i1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5egjf"]
+size = Vector2(62, 64)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(294, 589)
+script = ExtResource("1_0r0r6")
+linear_velocity = Vector2(200, -2000)
+acceleration = Vector2(0, 980)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ojjr4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_5egjf")
+
+[node name="Ground" parent="." instance=ExtResource("3_nl3i1")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(480, -86)
+zoom = Vector2(0.4, 0.4)
+
+[node name="TestMonitor" type="Node" parent="." node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_rs303")
+target = NodePath("../Player")
+finish_line = NodePath("../Ground")
+tps = 120
