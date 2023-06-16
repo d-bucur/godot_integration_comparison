@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_8j1qp")
-tps = 60
+tps = 30
 expected_time = 4105.49
 expected_y = -1451.8
