@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_icnv1"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="3_fui4e"]
 [ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_s5uwd"]
+[ext_resource type="Script" path="res://scripts/verlet_integrator_const.gd" id="5_4itsm"]
 [ext_resource type="Script" path="res://scripts/trail.gd" id="5_v4btp"]
-[ext_resource type="Script" path="res://scripts/verlet_integrator.gd" id="6_wf8rt"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -42,7 +42,7 @@ script = ExtResource("5_v4btp")
 [node name="VelocityVerlet" type="Node2D" parent="."]
 modulate = Color(1, 0.282353, 1, 1)
 position = Vector2(294, 589)
-script = ExtResource("6_wf8rt")
+script = ExtResource("5_4itsm")
 linear_velocity = Vector2(200, -2000)
 acceleration = Vector2(0, 980)
 
