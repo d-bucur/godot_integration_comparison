@@ -25,10 +25,10 @@ func _physics_process(_delta: float) -> void:
 func _on_finished():
 	var t = Time.get_ticks_msec() - time_started
 	var t_error = abs(float(setup.expected_time - t)) / setup.expected_time * 100
-	var y_error = abs(setup.expected_y - max_y) / setup.expected_y * 100
-	print("|-----------------|-----|-------|---------|---------|
-| method          | tps | max_x | min_y (%%err)  | time (%%err)   |
-| %s      | %d | %.1f | %.1f (%.1f) | %d (%.1f) |" \
+	var y_error = abs(setup.expected_y - max_y) / abs(setup.expected_y) * 100
+	print("|-----------------------|-----|--------|----------------|--------------|
+| method                | tps | max_x  | min_y (%%err)   | time (%%err)  |
+| %21s | %3d | %6.1f | %5.1f (%4.01f) | %5d (%4.01f) |" \
 	% [method_name, setup.tps, max_x, max_y, y_error, t, t_error])
 	is_stopped = true
 	target.sleeping = true
