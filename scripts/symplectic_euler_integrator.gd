@@ -8,6 +8,5 @@ var sleeping := false
 func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
-	var dv = acceleration * dt
-	position += (linear_velocity + dv * 0.5) * dt
-	linear_velocity += dv
+	linear_velocity += acceleration * dt
+	position += linear_velocity * dt

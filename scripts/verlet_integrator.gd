@@ -1,7 +1,7 @@
 extends Node2D
 
-@export var linear_velocity: Vector2
-@export var gravity: Vector2
+@export var linear_velocity := Vector2(200, -2000)
+@export var gravity := Vector2(0, 980)
 
 var acceleration = null
 
