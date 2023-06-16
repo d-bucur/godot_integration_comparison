@@ -1,5 +1,5 @@
-| method                   | tps | max_x  | min_y   | time    |
+| method          | tps | max_x | min_y (err)  | time (err)   |
 |--------------------------|-----|--------|---------|---------|
 | analytical               |     |        | -1451.8 | 4105.49 |
-| engine/euler             | 120 | 933.9  | -1201.6 | 3808    |
-| velocity_vernet_constant | 120 | 1115.7 | -1451.8 | 4055    |
+| engine_euler      | 60 | 932.5 | -1192.6 (-17.9) | 3874 (5.6) |
+| velocity_vernet_const      | 60 | 1117.3 | -1451.8 (-0.0) | 4131 (0.6) |

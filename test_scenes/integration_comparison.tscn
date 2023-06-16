@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=7 format=3 uid="uid://dpu6ek7fvh71d"]
 
 [ext_resource type="PackedScene" uid="uid://dpfh0i55mrxd8" path="res://ground.tscn" id="1_pnjng"]
 [ext_resource type="Script" path="res://test_monitor.gd" id="2_cv3s2"]
+[ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_setup.tres" id="3_c75pw"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="3_fui4e"]
 [ext_resource type="Script" path="res://trail.gd" id="4_ua7nv"]
 [ext_resource type="Script" path="res://verlet_integrator.gd" id="5_qybnl"]
@@ -22,10 +23,10 @@ linear_velocity = Vector2(200, -2000)
 
 [node name="TestMonitor" type="Node" parent="EngineDefault" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_cv3s2")
-method_name = "engine/euler"
+method_name = "engine_euler"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-tps = 120
+setup = ExtResource("3_c75pw")
 
 [node name="Sprite2D" type="Sprite2D" parent="EngineDefault"]
 texture = ExtResource("3_fui4e")
@@ -43,10 +44,10 @@ acceleration = Vector2(0, 980)
 
 [node name="TestMonitor2" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_cv3s2")
-method_name = "velocity_vernet_constant"
+method_name = "velocity_verlet_const"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-tps = 120
+setup = ExtResource("3_c75pw")
 
 [node name="Sprite2D" type="Sprite2D" parent="VelocityVerlet"]
 texture = ExtResource("3_fui4e")

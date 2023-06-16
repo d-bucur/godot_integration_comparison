@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TestSetup" load_steps=2 format=3 uid="uid://bnrhcmxvb3sfg"]
+
+[ext_resource type="Script" path="res://scripts/test_setup.gd" id="1_8j1qp"]
+
+[resource]
+script = ExtResource("1_8j1qp")
+tps = 60
+expected_time = 4105.49
+expected_y = -1451.8

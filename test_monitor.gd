@@ -3,12 +3,7 @@ extends Node
 @export var method_name: String
 @export var target: Node2D
 @export var finish_line: Node2D
-## physics_ticks_per_second value
-@export var tps: int = 60
-# https://www.wolframalpha.com/input?i=y1%3D637%3B+y0%3D589%3B+v0%3D-2000%3B+a%3D980%3B+solve+1%2F2*a*t%5E2+%2B+v0*t+%2B+y0+-+y1+%3D+0+
-## expected time calculated by resolving the motion equation
-## 1/2*a*t^2 + v0*t + y0 - y1 = 0
-@export var expected_time: float = 4105.49
+@export var setup: TestSetup
 
 var max_x: float = -1000
 var max_y: float = 1000
@@ -16,8 +11,6 @@ var time_started = null
 var is_stopped = false
 
 func _ready() -> void:
-	# Engine.max_fps = fps
-	Engine.physics_ticks_per_second = tps
 	time_started = Time.get_ticks_msec()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,10 +24,11 @@ func _physics_process(_delta: float) -> void:
 
 func _on_finished():
 	var t = Time.get_ticks_msec() - time_started
-	# var t_error = abs(float(expected_time - t)) / expected_time
+	var t_error = abs(float(setup.expected_time - t)) / setup.expected_time * 100
+	var y_error = abs(setup.expected_y - max_y) / setup.expected_y * 100
 	print("|-----------------|-----|-------|---------|---------|
-| method          | tps | max_x | min_y   | time    |
-|-----------------|-----|-------|---------|---------|
-| %s      | %d | %.1f | %.1f | %d |" % [method_name, tps, max_x, max_y, t])
+| method          | tps | max_x | min_y (%%err)  | time (%%err)   |
+| %s      | %d | %.1f | %.1f (%.1f) | %d (%.1f) |" \
+	% [method_name, setup.tps, max_x, max_y, y_error, t, t_error])
 	is_stopped = true
 	target.sleeping = true
