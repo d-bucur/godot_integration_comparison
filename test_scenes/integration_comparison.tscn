@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=7 format=3 uid="uid://dpu6ek7fvh71d"]
 
 [ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_icnv1"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="3_fui4e"]
 [ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_s5uwd"]
 [ext_resource type="Script" path="res://scripts/verlet_integrator_const.gd" id="5_4itsm"]
 [ext_resource type="Script" path="res://scripts/trail.gd" id="5_v4btp"]
+[ext_resource type="Script" path="res://scripts/verlet_integrator.gd" id="6_wf8rt"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -37,18 +38,41 @@ texture = ExtResource("3_fui4e")
 
 [node name="Trail" type="Line2D" parent="EngineDefault"]
 top_level = true
+default_color = Color(1, 1, 1, 0.376471)
 script = ExtResource("5_v4btp")
 
-[node name="VelocityVerlet" type="Node2D" parent="."]
+[node name="VelocityVerletConst" type="Node2D" parent="."]
 modulate = Color(1, 0.282353, 1, 1)
 position = Vector2(294, 589)
 script = ExtResource("5_4itsm")
 linear_velocity = Vector2(200, -2000)
 acceleration = Vector2(0, 980)
 
-[node name="TestMonitor2" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="VelocityVerletConst" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_icnv1")
 method_name = "velocity_verlet_const"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_s5uwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="VelocityVerletConst"]
+texture = ExtResource("3_fui4e")
+
+[node name="Trail" type="Line2D" parent="VelocityVerletConst"]
+modulate = Color(1, 0.282353, 1, 0.376471)
+top_level = true
+script = ExtResource("5_v4btp")
+
+[node name="VelocityVerlet" type="Node2D" parent="."]
+modulate = Color(0.129412, 0.282353, 1, 1)
+position = Vector2(294, 589)
+script = ExtResource("6_wf8rt")
+linear_velocity = Vector2(200, -2000)
+gravity = Vector2(0, 980)
+
+[node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_icnv1")
+method_name = "velocity_verlet"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
 setup = ExtResource("3_s5uwd")
@@ -59,4 +83,5 @@ texture = ExtResource("3_fui4e")
 [node name="Trail" type="Line2D" parent="VelocityVerlet"]
 modulate = Color(1, 0.282353, 1, 1)
 top_level = true
+default_color = Color(0.129412, 0.282353, 1, 0.376471)
 script = ExtResource("5_v4btp")
