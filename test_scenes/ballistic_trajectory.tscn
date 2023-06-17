@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=11 format=3 uid="uid://dpu6ek7fvh71d"]
 
-[ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_icnv1"]
-[ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="3_fui4e"]
-[ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_s5uwd"]
-[ext_resource type="Script" path="res://scripts/verlet_integrator_const.gd" id="5_4itsm"]
-[ext_resource type="Script" path="res://scripts/trail.gd" id="5_v4btp"]
-[ext_resource type="Script" path="res://scripts/verlet_integrator.gd" id="6_wf8rt"]
-[ext_resource type="Script" path="res://scripts/symplectic_euler_integrator.gd" id="7_ymdqu"]
-[ext_resource type="Script" path="res://scripts/euler_integrator.gd" id="8_eynpv"]
+[ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_i5pk7"]
+[ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_hwx7j"]
+[ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_gj0h8"]
+[ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_b7uag"]
+[ext_resource type="Script" path="res://scripts/trail.gd" id="4_fnky3"]
+[ext_resource type="Script" path="res://scripts/integrators/verlet_integrator_const.gd" id="5_c1puo"]
+[ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_5mrdu"]
+[ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="8_bbqsc"]
+[ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="9_iw8r6"]
+[ext_resource type="Script" path="res://scripts/const_gravitation.gd" id="9_tkcov"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -20,108 +22,111 @@ position = Vector2(483, 637)
 scale = Vector2(11.64, -0.12)
 
 [node name="Sprite2D" type="Sprite2D" parent="Ground"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
 [node name="EngineDefault" type="RigidBody2D" parent="."]
+visible = false
 position = Vector2(294, 589)
 max_contacts_reported = 1
 contact_monitor = true
 linear_velocity = Vector2(200, -2000)
 
 [node name="TestMonitor" type="Node" parent="EngineDefault" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_icnv1")
+script = ExtResource("2_hwx7j")
 method_name = "engine_default"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_s5uwd")
+setup = ExtResource("3_gj0h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="EngineDefault"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
-[node name="Trail" type="Line2D" parent="EngineDefault"]
-top_level = true
-default_color = Color(1, 1, 1, 0.376471)
-script = ExtResource("5_v4btp")
+[node name="Trail" parent="EngineDefault" instance=ExtResource("4_b7uag")]
 
 [node name="VelocityVerletConst" type="Node2D" parent="."]
+visible = false
 modulate = Color(1, 0.282353, 1, 1)
 position = Vector2(294, 589)
-script = ExtResource("5_4itsm")
+script = ExtResource("5_c1puo")
 
 [node name="TestMonitor" type="Node" parent="VelocityVerletConst" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_icnv1")
+script = ExtResource("2_hwx7j")
 method_name = "velocity_verlet_const"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_s5uwd")
+setup = ExtResource("3_gj0h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="VelocityVerletConst"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
 [node name="Trail" type="Line2D" parent="VelocityVerletConst"]
 modulate = Color(1, 0.282353, 1, 0.376471)
 top_level = true
-script = ExtResource("5_v4btp")
+script = ExtResource("4_fnky3")
 
 [node name="VelocityVerlet" type="Node2D" parent="."]
+visible = false
 modulate = Color(0.129412, 0.282353, 1, 1)
 position = Vector2(294, 589)
-script = ExtResource("6_wf8rt")
+script = ExtResource("7_5mrdu")
 
 [node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_icnv1")
+script = ExtResource("2_hwx7j")
 method_name = "velocity_verlet"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_s5uwd")
+setup = ExtResource("3_gj0h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="VelocityVerlet"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
 [node name="Trail" type="Line2D" parent="VelocityVerlet"]
 modulate = Color(1, 0.282353, 1, 1)
 top_level = true
 default_color = Color(0.129412, 0.282353, 1, 0.376471)
-script = ExtResource("5_v4btp")
+script = ExtResource("4_fnky3")
 
 [node name="SymplecticEuler" type="Node2D" parent="."]
 modulate = Color(0.552941, 1, 0.431373, 1)
 position = Vector2(294, 589)
-script = ExtResource("7_ymdqu")
+script = ExtResource("8_bbqsc")
 
 [node name="TestMonitor" type="Node" parent="SymplecticEuler" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_icnv1")
+script = ExtResource("2_hwx7j")
 method_name = "symplectic_euler"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_s5uwd")
+setup = ExtResource("3_gj0h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="SymplecticEuler"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
 [node name="Trail" type="Line2D" parent="SymplecticEuler"]
 modulate = Color(1, 0.282353, 1, 1)
 top_level = true
 default_color = Color(0.552941, 1, 0.431373, 0.321569)
-script = ExtResource("5_v4btp")
+script = ExtResource("4_fnky3")
 
 [node name="SimpleEuler" type="Node2D" parent="."]
 modulate = Color(1, 0.952941, 0.431373, 1)
 position = Vector2(294, 589)
-script = ExtResource("8_eynpv")
+script = ExtResource("9_iw8r6")
 
 [node name="TestMonitor" type="Node" parent="SimpleEuler" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_icnv1")
+script = ExtResource("2_hwx7j")
 method_name = "euler"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_s5uwd")
+setup = ExtResource("3_gj0h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="SimpleEuler"]
-texture = ExtResource("3_fui4e")
+texture = ExtResource("1_i5pk7")
 
 [node name="Trail" type="Line2D" parent="SimpleEuler"]
 modulate = Color(1, 0.282353, 1, 1)
 top_level = true
 default_color = Color(1, 0.952941, 0.431373, 0.372549)
-script = ExtResource("5_v4btp")
+script = ExtResource("4_fnky3")
+
+[node name="ConstantG" type="Node" parent="SimpleEuler"]
+script = ExtResource("9_tkcov")

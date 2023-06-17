@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://bf6x4xikm0dtb"]
+
+[ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
+[ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="2_fbk44"]
+[ext_resource type="Script" path="res://scripts/universal_gravitation.gd" id="3_eofqs"]
+[ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
+[ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
+
+[node name="orbital_comparison" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.41, 0.41)
+
+[node name="Sun" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sun"]
+modulate = Color(1, 1, 0.443137, 1)
+texture = ExtResource("1_7vwum")
+
+[node name="Euler" type="Node2D" parent="."]
+process_priority = 1
+modulate = Color(0.462745, 1, 0.231373, 1)
+position = Vector2(420, 0)
+script = ExtResource("2_fbk44")
+linear_velocity = Vector2(0, -350)
+
+[node name="Sprite2D" type="Sprite2D" parent="Euler"]
+texture = ExtResource("1_7vwum")
+
+[node name="Gravity" type="Node2D" parent="Euler" node_paths=PackedStringArray("orbiting_body")]
+script = ExtResource("3_eofqs")
+G = 1e+08
+orbiting_body = NodePath("../../Sun")
+
+[node name="Trail" parent="Euler" instance=ExtResource("4_4bhd8")]
+default_color = Color(0.462745, 1, 0.231373, 0.105882)
+
+[node name="SymplecticEuler" type="Node2D" parent="."]
+process_priority = 1
+modulate = Color(0.231373, 1, 0.988235, 1)
+position = Vector2(420, 0)
+script = ExtResource("5_uhuo6")
+linear_velocity = Vector2(0, -350)
+
+[node name="Sprite2D" type="Sprite2D" parent="SymplecticEuler"]
+texture = ExtResource("1_7vwum")
+
+[node name="Gravity" type="Node2D" parent="SymplecticEuler" node_paths=PackedStringArray("orbiting_body")]
+script = ExtResource("3_eofqs")
+G = 1e+08
+orbiting_body = NodePath("../../Sun")
+
+[node name="Trail" parent="SymplecticEuler" instance=ExtResource("4_4bhd8")]
+default_color = Color(0.231373, 1, 0.988235, 0.0666667)

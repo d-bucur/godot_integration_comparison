@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Integration Test"
-run/main_scene="res://test_scenes/integration_comparison.tscn"
+run/main_scene="res://test_scenes/ballistic_trajectory.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://icon.svg"
 
