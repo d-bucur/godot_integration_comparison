@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf6x4xikm0dtb"]
+[gd_scene load_steps=9 format=3 uid="uid://bf6x4xikm0dtb"]
 
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
 [ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="2_fbk44"]
 [ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="2_r3xqh"]
+[ext_resource type="Script" path="res://scripts/acceleration/gravity_single_body.gd" id="2_sjpon"]
 [ext_resource type="Script" path="res://scripts/universal_gravitation.gd" id="3_eofqs"]
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
+[ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_o76uq"]
 
 [node name="orbital_comparison" type="Node2D"]
 
@@ -17,6 +19,11 @@ zoom = Vector2(0.41, 0.41)
 [node name="Sprite2D" type="Sprite2D" parent="Sun"]
 modulate = Color(1, 1, 0.443137, 1)
 texture = ExtResource("1_7vwum")
+
+[node name="GravitySun" type="Node" parent="." node_paths=PackedStringArray("orbiting_body")]
+script = ExtResource("2_sjpon")
+G = 1e+08
+orbiting_body = NodePath("../Sun")
 
 [node name="EngineRigidbody" type="RigidBody2D" parent="."]
 process_priority = 1
@@ -31,7 +38,13 @@ G = 1e+08
 orbiting_body = NodePath("../../Sun")
 
 [node name="Trail" parent="EngineRigidbody" instance=ExtResource("4_4bhd8")]
-default_color = Color(1, 1, 1, 0.376471)
+
+[node name="Label" type="Label" parent="EngineRigidbody"]
+offset_left = 34.0
+offset_top = -57.0
+offset_right = 74.0
+offset_bottom = -31.0
+text = "ERB"
 
 [node name="Euler" type="Node2D" parent="."]
 process_priority = 1
@@ -50,6 +63,13 @@ orbiting_body = NodePath("../../Sun")
 [node name="Trail" parent="Euler" instance=ExtResource("4_4bhd8")]
 default_color = Color(0.462745, 1, 0.231373, 0.105882)
 
+[node name="Label" type="Label" parent="Euler"]
+offset_left = 30.0
+offset_top = 37.0
+offset_right = 70.0
+offset_bottom = 63.0
+text = "EUL"
+
 [node name="SymplecticEuler" type="Node2D" parent="."]
 process_priority = 1
 modulate = Color(0.231373, 1, 0.988235, 1)
@@ -66,3 +86,28 @@ orbiting_body = NodePath("../../Sun")
 
 [node name="Trail" parent="SymplecticEuler" instance=ExtResource("4_4bhd8")]
 default_color = Color(0.231373, 1, 0.988235, 0.0666667)
+
+[node name="Label" type="Label" parent="SymplecticEuler"]
+offset_top = 37.0
+offset_right = 40.0
+offset_bottom = 63.0
+text = "SIE"
+
+[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.721569, 0.203922, 0.878431, 1)
+position = Vector2(420, 0)
+script = ExtResource("7_o76uq")
+linear_velocity = Vector2(0, -350)
+acceleration = NodePath("../GravitySun")
+
+[node name="ObjectSprite" parent="VelocityVerlet" instance=ExtResource("2_r3xqh")]
+
+[node name="Trail" parent="VelocityVerlet" instance=ExtResource("4_4bhd8")]
+default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
+
+[node name="Label" type="Label" parent="VelocityVerlet"]
+offset_top = -59.0
+offset_right = 40.0
+offset_bottom = -33.0
+text = "VVE"

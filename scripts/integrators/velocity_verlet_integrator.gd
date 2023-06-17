@@ -1,22 +1,23 @@
 extends Node2D
 
 @export var linear_velocity := Vector2(200, -2000)
-@export var gravity := Vector2(0, 980)
+@export var acceleration: AccelerationProvider
 
-var acceleration = null
-
+var accel_old = Vector2.ZERO # TODO will lag behind in tests
 var sleeping := false
-
-func _integrate_forces(_dt: float) -> Vector2:
-	return gravity # constant force in this example
 
 func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
+
+	position += linear_velocity * dt + accel_old * dt * dt * 0.5
+	var accel = acceleration.eval(dt, self)
+	linear_velocity += (accel + accel_old) * (dt * 0.5)
+	accel_old = accel
 	
-	# branch only used on first frame for accurate testing. in outside usage this can probably be skipped
-	var old_accel = acceleration if acceleration != null else _integrate_forces(dt)
-	var dt_half = dt * 0.5
-	position += (linear_velocity + old_accel * dt_half) * dt
-	acceleration = _integrate_forces(dt) # ignoring mass
-	linear_velocity += (acceleration + old_accel) * dt_half
+	# TODO not working as it should
+	# var dt_half = dt * 0.5
+	# position += (linear_velocity + accel_old * dt_half) * dt
+	# linear_velocity += (accel + accel_old) * dt_half
+	# accel_old = accel
+	# accel = Vector2.ZERO

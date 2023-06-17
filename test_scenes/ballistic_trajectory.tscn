@@ -66,7 +66,6 @@ top_level = true
 script = ExtResource("4_fnky3")
 
 [node name="VelocityVerlet" type="Node2D" parent="."]
-visible = false
 modulate = Color(0.129412, 0.282353, 1, 1)
 position = Vector2(294, 589)
 script = ExtResource("7_5mrdu")
@@ -86,6 +85,9 @@ modulate = Color(1, 0.282353, 1, 1)
 top_level = true
 default_color = Color(0.129412, 0.282353, 1, 0.376471)
 script = ExtResource("4_fnky3")
+
+[node name="ConstantG" type="Node" parent="VelocityVerlet"]
+script = ExtResource("9_tkcov")
 
 [node name="SymplecticEuler" type="Node2D" parent="."]
 process_priority = 1

@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/size/window_width_override=2000
+window/size/window_height_override=1200
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
