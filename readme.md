@@ -1,8 +1,6 @@
 ## Description
 Testing different numerical integration methods for acceleration/velocity of bodies in Godot.
 
-[symplectic][1]
-
 | method          | symplectic[^1] | error order | implemented | error depends on Δt | samples per step[^2] |
 |-----------------|------------|-------------|-------------|---------------------|------------------|
 | [Basic Euler](https://en.wikipedia.org/wiki/Euler_method)                    | ❌          | O(Δt)       | ✔️           | ✔️                   | 1                |
