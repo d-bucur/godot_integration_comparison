@@ -5,7 +5,7 @@ extends Node2D
 var acceleration := Vector2.ZERO
 var sleeping := false
 
-func add_force(f: Vector2):
+func apply_central_force(f: Vector2):
 	acceleration += f  # weightless
 
 func _physics_process(dt: float) -> void:

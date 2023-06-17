@@ -22,6 +22,8 @@ window/vsync/vsync_mode=0
 
 [physics]
 
+2d/default_gravity=0.0
+2d/default_gravity_vector=Vector2(0, 0)
 2d/default_linear_damp=0.0
 2d/default_angular_damp=0.0
 

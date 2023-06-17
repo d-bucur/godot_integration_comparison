@@ -4,5 +4,6 @@
 
 [node name="Trail" type="Line2D"]
 top_level = true
+width = 5.0
 default_color = Color(1, 1, 1, 0.376471)
 script = ExtResource("1_t2lhw")

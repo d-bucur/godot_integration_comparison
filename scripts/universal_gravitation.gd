@@ -8,4 +8,4 @@ func _physics_process(delta: float) -> void:
 	var r = orbiting_body.global_position - global_position
 	# TODO will silently bug out if r is 0
 	var g_force = G / r.length_squared() * r.normalized()
-	get_parent().add_force(g_force)
+	get_parent().apply_central_force(g_force)

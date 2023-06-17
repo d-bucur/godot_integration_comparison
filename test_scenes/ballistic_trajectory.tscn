@@ -25,10 +25,7 @@ scale = Vector2(11.64, -0.12)
 texture = ExtResource("1_i5pk7")
 
 [node name="EngineDefault" type="RigidBody2D" parent="."]
-visible = false
 position = Vector2(294, 589)
-max_contacts_reported = 1
-contact_monitor = true
 linear_velocity = Vector2(200, -2000)
 
 [node name="TestMonitor" type="Node" parent="EngineDefault" node_paths=PackedStringArray("target", "finish_line")]
@@ -42,6 +39,10 @@ setup = ExtResource("3_gj0h8")
 texture = ExtResource("1_i5pk7")
 
 [node name="Trail" parent="EngineDefault" instance=ExtResource("4_b7uag")]
+default_color = Color(1, 1, 1, 0.376471)
+
+[node name="ConstantG" type="Node" parent="EngineDefault"]
+script = ExtResource("9_tkcov")
 
 [node name="VelocityVerletConst" type="Node2D" parent="."]
 visible = false
@@ -87,6 +88,7 @@ default_color = Color(0.129412, 0.282353, 1, 0.376471)
 script = ExtResource("4_fnky3")
 
 [node name="SymplecticEuler" type="Node2D" parent="."]
+process_priority = 1
 modulate = Color(0.552941, 1, 0.431373, 1)
 position = Vector2(294, 589)
 script = ExtResource("8_bbqsc")
@@ -107,7 +109,11 @@ top_level = true
 default_color = Color(0.552941, 1, 0.431373, 0.321569)
 script = ExtResource("4_fnky3")
 
+[node name="ConstantG" type="Node" parent="SymplecticEuler"]
+script = ExtResource("9_tkcov")
+
 [node name="SimpleEuler" type="Node2D" parent="."]
+process_priority = 1
 modulate = Color(1, 0.952941, 0.431373, 1)
 position = Vector2(294, 589)
 script = ExtResource("9_iw8r6")

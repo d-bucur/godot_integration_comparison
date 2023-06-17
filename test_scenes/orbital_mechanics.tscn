@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bf6x4xikm0dtb"]
+[gd_scene load_steps=7 format=3 uid="uid://bf6x4xikm0dtb"]
 
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
 [ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="2_fbk44"]
+[ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="2_r3xqh"]
 [ext_resource type="Script" path="res://scripts/universal_gravitation.gd" id="3_eofqs"]
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
@@ -17,6 +18,21 @@ zoom = Vector2(0.41, 0.41)
 modulate = Color(1, 1, 0.443137, 1)
 texture = ExtResource("1_7vwum")
 
+[node name="EngineRigidbody" type="RigidBody2D" parent="."]
+process_priority = 1
+position = Vector2(420, 0)
+linear_velocity = Vector2(0, -350)
+
+[node name="ObjectSprite" parent="EngineRigidbody" instance=ExtResource("2_r3xqh")]
+
+[node name="Gravity" type="Node2D" parent="EngineRigidbody" node_paths=PackedStringArray("orbiting_body")]
+script = ExtResource("3_eofqs")
+G = 1e+08
+orbiting_body = NodePath("../../Sun")
+
+[node name="Trail" parent="EngineRigidbody" instance=ExtResource("4_4bhd8")]
+default_color = Color(1, 1, 1, 0.376471)
+
 [node name="Euler" type="Node2D" parent="."]
 process_priority = 1
 modulate = Color(0.462745, 1, 0.231373, 1)
@@ -24,8 +40,7 @@ position = Vector2(420, 0)
 script = ExtResource("2_fbk44")
 linear_velocity = Vector2(0, -350)
 
-[node name="Sprite2D" type="Sprite2D" parent="Euler"]
-texture = ExtResource("1_7vwum")
+[node name="ObjectSprite" parent="Euler" instance=ExtResource("2_r3xqh")]
 
 [node name="Gravity" type="Node2D" parent="Euler" node_paths=PackedStringArray("orbiting_body")]
 script = ExtResource("3_eofqs")
@@ -42,8 +57,7 @@ position = Vector2(420, 0)
 script = ExtResource("5_uhuo6")
 linear_velocity = Vector2(0, -350)
 
-[node name="Sprite2D" type="Sprite2D" parent="SymplecticEuler"]
-texture = ExtResource("1_7vwum")
+[node name="ObjectSprite" parent="SymplecticEuler" instance=ExtResource("2_r3xqh")]
 
 [node name="Gravity" type="Node2D" parent="SymplecticEuler" node_paths=PackedStringArray("orbiting_body")]
 script = ExtResource("3_eofqs")
