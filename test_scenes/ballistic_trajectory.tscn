@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=12 format=3 uid="uid://dpu6ek7fvh71d"]
 
+[ext_resource type="Script" path="res://scripts/acceleration/gravity_const.gd" id="1_dbqga"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_i5pk7"]
 [ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_hwx7j"]
 [ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_gj0h8"]
@@ -16,6 +17,9 @@
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(480, -364)
 zoom = Vector2(0.292, 0.292)
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("1_dbqga")
 
 [node name="Ground" type="Node2D" parent="."]
 position = Vector2(483, 637)
@@ -39,7 +43,6 @@ setup = ExtResource("3_gj0h8")
 texture = ExtResource("1_i5pk7")
 
 [node name="Trail" parent="EngineDefault" instance=ExtResource("4_b7uag")]
-default_color = Color(1, 1, 1, 0.376471)
 
 [node name="ConstantG" type="Node" parent="EngineDefault"]
 script = ExtResource("9_tkcov")
@@ -65,10 +68,11 @@ modulate = Color(1, 0.282353, 1, 0.376471)
 top_level = true
 script = ExtResource("4_fnky3")
 
-[node name="VelocityVerlet" type="Node2D" parent="."]
+[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.129412, 0.282353, 1, 1)
 position = Vector2(294, 589)
 script = ExtResource("7_5mrdu")
+acceleration = NodePath("../Gravity")
 
 [node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_hwx7j")
@@ -85,9 +89,6 @@ modulate = Color(1, 0.282353, 1, 1)
 top_level = true
 default_color = Color(0.129412, 0.282353, 1, 0.376471)
 script = ExtResource("4_fnky3")
-
-[node name="ConstantG" type="Node" parent="VelocityVerlet"]
-script = ExtResource("9_tkcov")
 
 [node name="SymplecticEuler" type="Node2D" parent="."]
 process_priority = 1

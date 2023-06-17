@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bf6x4xikm0dtb"]
+[gd_scene load_steps=11 format=3 uid="uid://bf6x4xikm0dtb"]
 
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
+[ext_resource type="Script" path="res://scripts/test_setup2.gd" id="1_qu4ds"]
 [ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="2_fbk44"]
 [ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="2_r3xqh"]
 [ext_resource type="Script" path="res://scripts/acceleration/gravity_single_body.gd" id="2_sjpon"]
@@ -8,8 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_o76uq"]
+[ext_resource type="Script" path="res://scripts/controls.gd" id="10_gcf3c"]
 
 [node name="orbital_comparison" type="Node2D"]
+
+[node name="TestSetup" type="Node" parent="."]
+script = ExtResource("1_qu4ds")
+tps = 60
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.41, 0.41)
@@ -94,7 +100,6 @@ offset_bottom = 63.0
 text = "SIE"
 
 [node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-process_priority = 1
 modulate = Color(0.721569, 0.203922, 0.878431, 1)
 position = Vector2(420, 0)
 script = ExtResource("7_o76uq")
@@ -111,3 +116,6 @@ offset_top = -59.0
 offset_right = 40.0
 offset_bottom = -33.0
 text = "VVE"
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("10_gcf3c")

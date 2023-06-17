@@ -14,10 +14,3 @@ func _physics_process(dt: float) -> void:
 	var accel = acceleration.eval(dt, self)
 	linear_velocity += (accel + accel_old) * (dt * 0.5)
 	accel_old = accel
-	
-	# TODO not working as it should
-	# var dt_half = dt * 0.5
-	# position += (linear_velocity + accel_old * dt_half) * dt
-	# linear_velocity += (accel + accel_old) * dt_half
-	# accel_old = accel
-	# accel = Vector2.ZERO
