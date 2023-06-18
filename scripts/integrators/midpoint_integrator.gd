@@ -5,9 +5,6 @@ extends Node2D
 
 var sleeping := false
 
-func vel(t: float, p: Vector2) -> Vector2:
-	return linear_velocity + acceleration.eval(t, p) * t
-
 func _physics_process(dt: float) -> void:
 	if sleeping:
 		return

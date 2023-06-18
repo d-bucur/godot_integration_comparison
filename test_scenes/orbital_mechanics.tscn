@@ -138,5 +138,24 @@ offset_bottom = -33.0
 text = "MDP
 "
 
+[node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.211765, 0.878431, 1)
+position = Vector2(420, 0)
+script = ExtResource("10_bg512")
+linear_velocity = Vector2(0, -350)
+acceleration = NodePath("../GravitySun")
+
+[node name="ObjectSprite" parent="Leapfrog" instance=ExtResource("2_r3xqh")]
+
+[node name="Trail" parent="Leapfrog" instance=ExtResource("4_4bhd8")]
+default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
+
+[node name="Label" type="Label" parent="Leapfrog"]
+offset_left = -47.0
+offset_top = 35.0
+offset_right = -7.0
+offset_bottom = 61.0
+text = "LPF"
+
 [node name="Controls" type="Node" parent="."]
 script = ExtResource("10_gcf3c")
