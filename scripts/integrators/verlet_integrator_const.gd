@@ -1,4 +1,5 @@
 extends Node2D
+# TODO remove this
 
 @export var linear_velocity := Vector2(200, -2000)
 @export var acceleration := Vector2(0, 980)

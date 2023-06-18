@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf6x4xikm0dtb"]
+[gd_scene load_steps=13 format=3 uid="uid://bf6x4xikm0dtb"]
 
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
 [ext_resource type="Script" path="res://scripts/test_setup2.gd" id="1_qu4ds"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_o76uq"]
 [ext_resource type="Script" path="res://scripts/integrators/midpoint_integrator.gd" id="10_bg512"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="10_gcf3c"]
+[ext_resource type="Script" path="res://scripts/integrators/rk4_integrator.gd" id="11_dbks0"]
 
 [node name="orbital_comparison" type="Node2D"]
 
@@ -156,6 +157,25 @@ offset_top = 35.0
 offset_right = -7.0
 offset_bottom = 61.0
 text = "LPF"
+
+[node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.203922, 0.203922, 1)
+position = Vector2(420, 0)
+script = ExtResource("11_dbks0")
+linear_velocity = Vector2(0, -350)
+acceleration = NodePath("../GravitySun")
+
+[node name="ObjectSprite" parent="RK4" instance=ExtResource("2_r3xqh")]
+
+[node name="Trail" parent="RK4" instance=ExtResource("4_4bhd8")]
+default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
+
+[node name="Label" type="Label" parent="RK4"]
+offset_left = -73.0
+offset_top = -9.0
+offset_right = -33.0
+offset_bottom = 17.0
+text = "RK4"
 
 [node name="Controls" type="Node" parent="."]
 script = ExtResource("10_gcf3c")
