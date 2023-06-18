@@ -10,7 +10,8 @@ func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
+	# TODO optimize
 	position += linear_velocity * dt + accel_old * dt * dt * 0.5
-	var accel = acceleration.eval(dt, self)
+	var accel = acceleration.eval(dt, global_position)
 	linear_velocity += (accel + accel_old) * (dt * 0.5)
 	accel_old = accel

@@ -1,3 +1,4 @@
+## Ballistic trajectory
 | method                | tps[^1] | max_x  | min_y (%err)   | time (%err)  |
 |-----------------------|-----|--------|----------------|--------------|
 |            analytical |     |        | -1451.8        | 4105.49      |
@@ -7,4 +8,7 @@
 |       velocity_verlet |  60 | 1117.3 | -1451.8 ( 0.0) |  4067 ( 0.9) |
 |                 euler |  60 | 1120.7 | -1468.5 ( 1.2) |  4084 ( 0.5) |
 
-[^1]: ticks per second (fixed timestep). Δt = 1/tps
+## Orbital mechanics
+TODO use Kepler to measure errors
+
+[^1]: ticks per second (fixed timestep). Δt = 1s/tps

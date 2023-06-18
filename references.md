@@ -15,6 +15,7 @@
   [wiki](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
   [principia](https://github.com/mockingbirdnest/Principia/blob/ca2948a74840c8c0416af83efce8f7ebebc6d430/documentation/ODEs%20and%20Runge-Kutta%20integrators.pdf)
 - heun method?
+- leapfrog?
 
 ## other engines
 Box2d: [symplectic euler](https://gamedev.stackexchange.com/questions/79938/unitys-default-integration-method)

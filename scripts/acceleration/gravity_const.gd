@@ -2,5 +2,5 @@ extends AccelerationProvider
 
 @export var g := Vector2(0, 980)
 
-func eval(t: float, caller) -> Vector2:
+func eval(_t, _p) -> Vector2:
 	return g
