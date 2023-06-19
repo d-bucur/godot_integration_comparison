@@ -7,8 +7,8 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 | Symplectic Euler                     | ✔️             | O(Δt)       | ❌              | 1                    |
 | Godot Rigidbody2D (symplectic Euler) | ✔️             | O(Δt)       | ❌              | 1                    |
 | Velocity Verlet                      | ✔️             | O(Δt^2)     | ✔️              | 1[^4]                |
-| Leapfrog                             | ✔️             | O(Δt^2)     | ✔️              | 1[^4]                |
-| Midpoint                             | ❔             | O(Δt^2)     | ✔️              | 1[^4]                |
+| Leapfrog                             | ✔️             | O(Δt^2)     | ❔              | 1[^4]                |
+| Midpoint                             | ❔             | O(Δt^2)     | ❌              | 2                    |
 | RK4                                  | ❌             | O(Δt^4)     | ❔              | 4                    |
 
 

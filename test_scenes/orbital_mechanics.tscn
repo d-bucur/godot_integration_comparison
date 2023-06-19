@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bf6x4xikm0dtb"]
+[gd_scene load_steps=15 format=3 uid="uid://bf6x4xikm0dtb"]
 
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_7vwum"]
 [ext_resource type="Script" path="res://scripts/test_setup2.gd" id="1_qu4ds"]
@@ -9,9 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_o76uq"]
+[ext_resource type="Theme" uid="uid://qlwoo64gl4hg" path="res://label_theme.tres" id="7_wubh1"]
 [ext_resource type="Script" path="res://scripts/integrators/midpoint_integrator.gd" id="10_bg512"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="10_gcf3c"]
 [ext_resource type="Script" path="res://scripts/integrators/rk4_integrator.gd" id="11_dbks0"]
+[ext_resource type="Script" path="res://scripts/integrators/leapfrog_integrator.gd" id="12_yo03e"]
 
 [node name="orbital_comparison" type="Node2D"]
 
@@ -35,6 +37,7 @@ orbiting_body = NodePath("../Sun")
 
 [node name="EngineRigidbody" type="RigidBody2D" parent="."]
 process_priority = 1
+visible = false
 position = Vector2(420, 0)
 linear_velocity = Vector2(0, -350)
 
@@ -52,6 +55,7 @@ offset_left = 34.0
 offset_top = -57.0
 offset_right = 74.0
 offset_bottom = -31.0
+theme = ExtResource("7_wubh1")
 text = "ERB"
 
 [node name="Euler" type="Node2D" parent="."]
@@ -76,6 +80,7 @@ offset_left = 30.0
 offset_top = 37.0
 offset_right = 70.0
 offset_bottom = 63.0
+theme = ExtResource("7_wubh1")
 text = "EUL"
 
 [node name="SymplecticEuler" type="Node2D" parent="."]
@@ -99,6 +104,7 @@ default_color = Color(0.231373, 1, 0.988235, 0.0666667)
 offset_top = 37.0
 offset_right = 40.0
 offset_bottom = 63.0
+theme = ExtResource("7_wubh1")
 text = "SIE"
 
 [node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
@@ -117,6 +123,7 @@ default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
 offset_top = -59.0
 offset_right = 40.0
 offset_bottom = -33.0
+theme = ExtResource("7_wubh1")
 text = "VVE"
 
 [node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
@@ -136,13 +143,14 @@ offset_left = -47.0
 offset_top = -59.0
 offset_right = -7.0
 offset_bottom = -33.0
+theme = ExtResource("7_wubh1")
 text = "MDP
 "
 
 [node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.203922, 0.211765, 0.878431, 1)
 position = Vector2(420, 0)
-script = ExtResource("10_bg512")
+script = ExtResource("12_yo03e")
 linear_velocity = Vector2(0, -350)
 acceleration = NodePath("../GravitySun")
 
@@ -156,6 +164,7 @@ offset_left = -47.0
 offset_top = 35.0
 offset_right = -7.0
 offset_bottom = 61.0
+theme = ExtResource("7_wubh1")
 text = "LPF"
 
 [node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
@@ -175,6 +184,7 @@ offset_left = -73.0
 offset_top = -9.0
 offset_right = -33.0
 offset_bottom = 17.0
+theme = ExtResource("7_wubh1")
 text = "RK4"
 
 [node name="Controls" type="Node" parent="."]
