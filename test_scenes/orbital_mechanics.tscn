@@ -51,6 +51,7 @@ orbiting_body = NodePath("../../Sun")
 [node name="Trail" parent="EngineRigidbody" instance=ExtResource("4_4bhd8")]
 
 [node name="Label" type="Label" parent="EngineRigidbody"]
+z_index = 200
 offset_left = 34.0
 offset_top = -57.0
 offset_right = 74.0
@@ -60,6 +61,7 @@ text = "ERB"
 
 [node name="Euler" type="Node2D" parent="."]
 process_priority = 1
+visible = false
 modulate = Color(0.462745, 1, 0.231373, 1)
 position = Vector2(420, 0)
 script = ExtResource("2_fbk44")
@@ -76,6 +78,7 @@ orbiting_body = NodePath("../../Sun")
 default_color = Color(0.462745, 1, 0.231373, 0.105882)
 
 [node name="Label" type="Label" parent="Euler"]
+z_index = 200
 offset_left = 30.0
 offset_top = 37.0
 offset_right = 70.0
@@ -101,6 +104,7 @@ orbiting_body = NodePath("../../Sun")
 default_color = Color(0.231373, 1, 0.988235, 0.0666667)
 
 [node name="Label" type="Label" parent="SymplecticEuler"]
+z_index = 200
 offset_top = 37.0
 offset_right = 40.0
 offset_bottom = 63.0
@@ -120,6 +124,7 @@ acceleration = NodePath("../GravitySun")
 default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
 
 [node name="Label" type="Label" parent="VelocityVerlet"]
+z_index = 200
 offset_top = -59.0
 offset_right = 40.0
 offset_bottom = -33.0
@@ -139,6 +144,7 @@ acceleration = NodePath("../GravitySun")
 default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
 
 [node name="Label" type="Label" parent="Midpoint"]
+z_index = 200
 offset_left = -47.0
 offset_top = -59.0
 offset_right = -7.0
@@ -160,6 +166,7 @@ acceleration = NodePath("../GravitySun")
 default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
 
 [node name="Label" type="Label" parent="Leapfrog"]
+z_index = 200
 offset_left = -47.0
 offset_top = 35.0
 offset_right = -7.0
@@ -168,6 +175,7 @@ theme = ExtResource("7_wubh1")
 text = "LPF"
 
 [node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+visible = false
 modulate = Color(0.878431, 0.203922, 0.203922, 1)
 position = Vector2(420, 0)
 script = ExtResource("11_dbks0")
@@ -180,6 +188,7 @@ acceleration = NodePath("../GravitySun")
 default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
 
 [node name="Label" type="Label" parent="RK4"]
+z_index = 200
 offset_left = -73.0
 offset_top = -9.0
 offset_right = -33.0

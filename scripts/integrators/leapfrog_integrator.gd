@@ -3,17 +3,17 @@ extends Node2D
 @export var linear_velocity := Vector2(200, -2000)
 @export var acceleration: AccelerationProvider
 
-var accel_old = Vector2.ZERO # TODO will lag behind in tests
 var sleeping := false
+
+func _ready() -> void:
+	# kickstart velocity to half step
+	var dt_half = 0.5/Engine.physics_ticks_per_second
+	linear_velocity += dt_half * acceleration.eval(dt_half, position)
 
 func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
-	# TODO something wrong, follows euler
-
-	var dt_half = dt * 0.5
 	var accel_new = acceleration.eval(dt, position)
-	position += dt * (linear_velocity + accel_new * dt_half)
-	linear_velocity += dt_half * (accel_new + accel_old)
-	accel_old = accel_new
+	linear_velocity += accel_new * dt
+	position += linear_velocity * dt

@@ -9,6 +9,9 @@
   [wiki](https://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet)
   [4](https://www.physics.udel.edu/~bnikolic/teaching/phys660/numerical_ode/node5.html)
   [5](https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html)
+- leapfrog
+  [yt](https://www.youtube.com/watch?v=pVudb6-_FaM)
+  [2](https://young.physics.ucsc.edu/115/leapfrog.pdf)
 - midpoint
   [1](https://stackoverflow.com/questions/60355029/how-to-use-midpoint-method-to-integrate-a-particle)
   [wiki](https://en.wikipedia.org/wiki/Midpoint_method)
@@ -17,6 +20,7 @@
   [wiki](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
   [principia](https://github.com/mockingbirdnest/Principia/blob/ca2948a74840c8c0416af83efce8f7ebebc6d430/documentation/ODEs%20and%20Runge-Kutta%20integrators.pdf)
   [4](https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/)
+- yoshida? like VV but higher order
 
 ## other engines
 Box2d: [symplectic euler](https://gamedev.stackexchange.com/questions/79938/unitys-default-integration-method)
