@@ -1,6 +1,8 @@
 ## integration methods
 - euler [yt series](https://www.youtube.com/watch?v=BIz-wEu0QwE&list=PLW3Zl3wyJwWPhARNV8SH1Jev5sgdH28ka&index=14)
-- symplectic euler [wiki](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method) [2](https://gafferongames.com/post/integration_basics/)
+- symplectic euler 
+  [wiki](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method) 
+  [2](https://gafferongames.com/post/integration_basics/)
 - verlet and variations 
   [1](https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917)
   [2](http://lolengine.net/blog/2011/12/14/understanding-motion-in-games)
@@ -8,7 +10,7 @@
   [4](https://www.physics.udel.edu/~bnikolic/teaching/phys660/numerical_ode/node5.html)
   [5](https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html)
 - midpoint
-  [1](https://www.physics.udel.edu/~bnikolic/teaching/phys660/numerical_ode/node3.html)
+  [1](https://stackoverflow.com/questions/60355029/how-to-use-midpoint-method-to-integrate-a-particle)
   [wiki](https://en.wikipedia.org/wiki/Midpoint_method)
 - RK4
   [yt](https://www.youtube.com/watch?v=hGCP6I2WisM&list=PLW3Zl3wyJwWPhARNV8SH1Jev5sgdH28ka&index=17)

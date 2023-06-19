@@ -1,4 +1,4 @@
-## Ballistic trajectory
+# Ballistic trajectory
 | method                | tps[^1] | max_x  | min_y (%err)   | time (%err)  |
 |-----------------------|-----|--------|----------------|--------------|
 |            analytical |     |        | -1451.8        | 4105.49      |
@@ -8,7 +8,14 @@
 |       velocity_verlet |  60 | 1117.3 | -1451.8 ( 0.0) |  4067 ( 0.9) |
 |                 euler |  60 | 1120.7 | -1468.5 ( 1.2) |  4084 ( 0.5) |
 
-## Orbital mechanics
+# Orbital mechanics
 TODO use Kepler to measure errors
+
+## Comments
+- Euler: completely innacurate, error increases with each timestep
+- Midpoint: error should increase as in Euler, but slower
+- Symplectic Euler: serviceable, but gains energy when varying timestep
+- Velocity Verlet: conserves energy, even at varying timesteps, but becauase of innacuracy the orbit rotates around the focal point
+- RK4: even more drift than VV, doesn't conserve energy, maybe something wrong with implementation or test
 
 [^1]: ticks per second (fixed timestep). Δt = 1s/tps

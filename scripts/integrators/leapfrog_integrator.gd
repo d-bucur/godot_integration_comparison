@@ -10,6 +10,8 @@ func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
+	# TODO something wrong, follows euler
+
 	var dt_half = dt * 0.5
 	var accel_new = acceleration.eval(dt, position)
 	position += dt * (linear_velocity + accel_new * dt_half)

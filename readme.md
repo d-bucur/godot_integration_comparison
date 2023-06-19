@@ -6,9 +6,9 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 | Basic Euler                          | ❌             | O(Δt)       | ❌              | 1                    |
 | Symplectic Euler                     | ✔️             | O(Δt)       | ❌              | 1                    |
 | Godot Rigidbody2D (symplectic Euler) | ✔️             | O(Δt)       | ❌              | 1                    |
-| Velocity Verlet                      | ✔️             | O(Δt^2)     | ✔️              | 1                    |
-| Leapfrog                             | ✔️             | O(Δt^2)     | ✔️              | 1                    |
-| Midpoint                             | ❔             | O(Δt^2)     | ✔️              | 1                    |
+| Velocity Verlet                      | ✔️             | O(Δt^2)     | ✔️              | 1[^4]                |
+| Leapfrog                             | ✔️             | O(Δt^2)     | ✔️              | 1[^4]                |
+| Midpoint                             | ❔             | O(Δt^2)     | ✔️              | 1[^4]                |
 | RK4                                  | ❌             | O(Δt^4)     | ❔              | 4                    |
 
 
@@ -18,12 +18,13 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 
 [^3]: Is the error constant with a variable timestep? While a workaround is to have a fixed timestep, this is still a preferred property that enables changing the speed of the simulation at runtime
 
+[^4]: Theoretically it's 2, but one sample can be cached from one frame to the next as it is the same value
+
 Testing scenarios:
-- Ballistic trajectory
-- Orbital mechanics
+- Ballistic trajectory - constant acceleration
+- Orbital mechanics - acceleration depends on position
 
 ## TODO
-- implement RK4
 - normalize acceleration sampling in all tests
 - update tests and results
 
