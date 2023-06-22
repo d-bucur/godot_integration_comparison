@@ -15,6 +15,10 @@ run/main_scene="res://test_scenes/ballistic_trajectory.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PerfMonitor="*res://scripts/perf_monitor.gd"
+
 [display]
 
 window/size/window_width_override=2000

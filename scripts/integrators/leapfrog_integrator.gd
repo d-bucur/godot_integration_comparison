@@ -14,6 +14,8 @@ func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
+	PerfMonitor.log_start("leap")
 	var accel_new = acceleration.eval(dt, position)
 	linear_velocity += accel_new * dt
 	position += linear_velocity * dt
+	PerfMonitor.log_stop("leap")

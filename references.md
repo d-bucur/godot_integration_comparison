@@ -20,7 +20,11 @@
   [wiki](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
   [principia](https://github.com/mockingbirdnest/Principia/blob/ca2948a74840c8c0416af83efce8f7ebebc6d430/documentation/ODEs%20and%20Runge-Kutta%20integrators.pdf)
   [4](https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/)
-- yoshida? like VV but higher order
+  [adaptive step](https://www.youtube.com/watch?v=JcRsGD2pKlA)
+- FR/PEFRL [1, last pages](https://young.physics.ucsc.edu/115/leapfrog.pdf)
+- yoshida 
+  [1](https://fse.studenttheses.ub.rug.nl/20185/1/bMATH_2019_PimJC.pdf)
+  [wiki](https://en.wikipedia.org/wiki/Leapfrog_integration#4th_order_Yoshida_integrator): like leapfrog but higher order
 
 ## other engines
 Box2d: [symplectic euler](https://gamedev.stackexchange.com/questions/79938/unitys-default-integration-method)
