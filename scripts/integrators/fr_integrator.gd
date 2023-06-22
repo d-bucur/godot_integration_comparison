@@ -4,21 +4,25 @@ extends Node2D
 @export var acceleration: AccelerationProvider
 
 var sleeping := false
-var theta := 1.35120719195966
+var theta := 1.351207191959657634047687
 
 func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
 	var dt_half = dt * 0.5
+	var a = theta * dt
+	var b = theta * dt_half
+	var c = (1 - theta) * dt_half
+	var d = (1 - 2 * theta) * dt
 	
-	position += theta * dt_half * linear_velocity
+	position += b * linear_velocity
 
-	linear_velocity += theta * dt * acceleration.eval(theta * dt, position)
-	position += (1 - theta) * dt_half * linear_velocity
+	linear_velocity += a * acceleration.eval(a, position)
+	position += c * linear_velocity
 
-	linear_velocity += (1 - 2*theta) * dt * acceleration.eval((1 - 2*theta), position) # TODO time not right
-	position += (1 - theta) * dt_half * linear_velocity # same step as above
+	linear_velocity += d * acceleration.eval(d, position)
+	position += c * linear_velocity
 
-	linear_velocity += theta * dt * acceleration.eval(theta * dt, position)
-	position += theta * dt_half * linear_velocity
+	linear_velocity += a * acceleration.eval(a, position)
+	position += b * linear_velocity
