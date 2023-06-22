@@ -33,6 +33,12 @@ TODO use Kepler to measure errors
 - Leapfrog: should be similar to symplectic euler, but the velocity and positions are staggered
 - RK4: even more drift than VV, doesn't conserve energy, maybe something wrong with implementation or test
 
+# Harmonic oscillator
+Pretty similar to test above since acceleration depends only on position. Maybe should replace with something that depends on time?
+
+# Battle Royale
+Since math isn't my strong suit, I'm using the very scientific method of pitting all the integrators against each other in a battle royale! The acceleration conditions change dynamically and the last one left in the arena wins!
+
 # Overall
 - Euler: just don't. This is basically to highlight everything that can go wrong
 - Symplectic Euler: Fastest and with decent accuracy. Is the standard implementation in most physics engines for games as performance is more important than accuracy. Just swapping the two lines of Euler for much better results and also very easy. Needs to be run at fixed timestep, otherwise error will pile up quickly

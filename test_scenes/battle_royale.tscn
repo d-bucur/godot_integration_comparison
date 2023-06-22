@@ -1,0 +1,253 @@
+[gd_scene load_steps=18 format=3 uid="uid://tbq2nnoos0qb"]
+
+[ext_resource type="Script" path="res://scripts/test_setup2.gd" id="1_gyudu"]
+[ext_resource type="Script" path="res://scripts/controls.gd" id="2_eolab"]
+[ext_resource type="Script" path="res://scripts/acceleration/oscillator.gd" id="3_8ds37"]
+[ext_resource type="Script" path="res://scripts/acceleration/battle_accel.gd" id="3_lvkho"]
+[ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="4_6tb28"]
+[ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="5_4eo1x"]
+[ext_resource type="Script" path="res://scripts/acceleration/gravity_const.gd" id="5_48dqw"]
+[ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="6_j1jfg"]
+[ext_resource type="Theme" uid="uid://qlwoo64gl4hg" path="res://label_theme.tres" id="7_imeut"]
+[ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="8_7onwk"]
+[ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="9_bix3w"]
+[ext_resource type="Script" path="res://scripts/integrators/midpoint_integrator.gd" id="10_4xls5"]
+[ext_resource type="Script" path="res://scripts/battle_checker.gd" id="10_t5358"]
+[ext_resource type="Script" path="res://scripts/integrators/leapfrog_integrator.gd" id="11_5svgb"]
+[ext_resource type="Script" path="res://scripts/integrators/rk4_integrator.gd" id="12_otsqx"]
+[ext_resource type="Script" path="res://scripts/integrators/fr_integrator.gd" id="13_vg37k"]
+[ext_resource type="Script" path="res://scripts/integrators/pefrl_integrator.gd" id="14_45mge"]
+
+[node name="orbital_comparison" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.41, 0.41)
+
+[node name="TestSetup" type="Node" parent="."]
+script = ExtResource("1_gyudu")
+tps = 60
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("2_eolab")
+
+[node name="BattleAccel" type="Node" parent="." node_paths=PackedStringArray("oscillator", "const_g", "timer")]
+script = ExtResource("3_lvkho")
+oscillator = NodePath("../Oscillator")
+const_g = NodePath("../ConstGravity")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="BattleAccel"]
+autostart = true
+
+[node name="Oscillator" type="Node" parent="."]
+script = ExtResource("3_8ds37")
+k = 10.0
+
+[node name="ConstGravity" type="Node" parent="."]
+script = ExtResource("5_48dqw")
+g = Vector2(0, 500)
+
+[node name="Euler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.462745, 1, 0.231373, 1)
+position = Vector2(600, 0)
+script = ExtResource("4_6tb28")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="Euler" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="Euler" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.462745, 1, 0.231373, 0.105882)
+
+[node name="Label" type="Label" parent="Euler"]
+z_index = 200
+offset_left = -65.0
+offset_top = -54.0
+offset_right = -25.0
+offset_bottom = -28.0
+theme = ExtResource("7_imeut")
+text = "EUL"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Euler"]
+script = ExtResource("10_t5358")
+
+[node name="SymplecticEuler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.231373, 1, 0.988235, 1)
+position = Vector2(600, 0)
+script = ExtResource("8_7onwk")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="SymplecticEuler" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="SymplecticEuler" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.231373, 1, 0.988235, 0.0666667)
+
+[node name="Label" type="Label" parent="SymplecticEuler"]
+z_index = 200
+offset_left = 13.0
+offset_top = -54.0
+offset_right = 53.0
+offset_bottom = -28.0
+theme = ExtResource("7_imeut")
+text = "SIE"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="SymplecticEuler"]
+script = ExtResource("10_t5358")
+
+[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.721569, 0.203922, 0.878431, 1)
+position = Vector2(600, 0)
+script = ExtResource("9_bix3w")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="VelocityVerlet" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="VelocityVerlet" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
+
+[node name="Label" type="Label" parent="VelocityVerlet"]
+z_index = 200
+offset_left = 36.0
+offset_top = -27.0
+offset_right = 76.0
+offset_bottom = -1.0
+theme = ExtResource("7_imeut")
+text = "VVE"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="VelocityVerlet"]
+script = ExtResource("10_t5358")
+
+[node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.788235, 0.203922, 1)
+position = Vector2(600, 0)
+script = ExtResource("10_4xls5")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="Midpoint" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="Midpoint" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
+
+[node name="Label" type="Label" parent="Midpoint"]
+z_index = 200
+offset_left = -71.0
+offset_top = -12.0
+offset_right = -31.0
+offset_bottom = 14.0
+theme = ExtResource("7_imeut")
+text = "MDP
+"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Midpoint"]
+script = ExtResource("10_t5358")
+
+[node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.211765, 0.878431, 1)
+position = Vector2(600, 0)
+script = ExtResource("11_5svgb")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="Leapfrog" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="Leapfrog" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
+
+[node name="Label" type="Label" parent="Leapfrog"]
+z_index = 200
+offset_left = 36.0
+offset_top = 4.0
+offset_right = 76.0
+offset_bottom = 30.0
+theme = ExtResource("7_imeut")
+text = "LPF"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Leapfrog"]
+script = ExtResource("10_t5358")
+
+[node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.203922, 0.203922, 1)
+position = Vector2(600, 0)
+script = ExtResource("12_otsqx")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="RK4" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="RK4" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
+
+[node name="Label" type="Label" parent="RK4"]
+z_index = 200
+offset_left = -67.0
+offset_top = 33.0
+offset_right = -27.0
+offset_bottom = 59.0
+theme = ExtResource("7_imeut")
+text = "RK4"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="RK4"]
+script = ExtResource("10_t5358")
+
+[node name="ForestRuth" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.486275, 0.203922, 1)
+position = Vector2(600, 0)
+script = ExtResource("13_vg37k")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="ForestRuth" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="ForestRuth" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.878431, 0.486275, 0.203922, 0.0627451)
+
+[node name="Label" type="Label" parent="ForestRuth"]
+z_index = 200
+offset_left = 32.0
+offset_top = 33.0
+offset_right = 72.0
+offset_bottom = 59.0
+theme = ExtResource("7_imeut")
+text = "FR"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="ForestRuth"]
+script = ExtResource("10_t5358")
+
+[node name="PEFRL" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.878431, 0.686275, 1)
+position = Vector2(600, 0)
+script = ExtResource("14_45mge")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../BattleAccel")
+
+[node name="ObjectSprite" parent="PEFRL" instance=ExtResource("5_4eo1x")]
+
+[node name="Trail" parent="PEFRL" instance=ExtResource("6_j1jfg")]
+default_color = Color(0.203922, 0.878431, 0.686275, 0.0627451)
+
+[node name="Label" type="Label" parent="PEFRL"]
+z_index = 200
+offset_left = -25.0
+offset_top = 33.0
+offset_right = 22.0
+offset_bottom = 59.0
+theme = ExtResource("7_imeut")
+text = "PEFRL"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="PEFRL"]
+script = ExtResource("10_t5358")
+
+[connection signal="timeout" from="BattleAccel/Timer" to="BattleAccel" method="_on_timer_timeout"]
+[connection signal="screen_exited" from="Euler/VisibleOnScreenNotifier2D" to="Euler/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="SymplecticEuler/VisibleOnScreenNotifier2D" to="SymplecticEuler/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="VelocityVerlet/VisibleOnScreenNotifier2D" to="VelocityVerlet/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="Midpoint/VisibleOnScreenNotifier2D" to="Midpoint/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="Leapfrog/VisibleOnScreenNotifier2D" to="Leapfrog/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="RK4/VisibleOnScreenNotifier2D" to="RK4/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="ForestRuth/VisibleOnScreenNotifier2D" to="ForestRuth/VisibleOnScreenNotifier2D" method="_on_screen_exited"]
+[connection signal="screen_exited" from="PEFRL/VisibleOnScreenNotifier2D" to="PEFRL/VisibleOnScreenNotifier2D" method="_on_screen_exited"]

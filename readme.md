@@ -26,6 +26,7 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 Testing scenarios:
 - Ballistic trajectory - constant acceleration
 - Orbital mechanics - acceleration depends on position
+- Harmonic oscillator - acceleration depends on position
 
 [Results (preliminary)](results.md) - comparison and errors from analytical solutions
 
@@ -33,6 +34,5 @@ Testing scenarios:
 
 ## Possible improvements
 - update tests and results
-- new tests: harmonic oscillator/battle royale
 - Yoshida integrator
 - Adaptive timestep
