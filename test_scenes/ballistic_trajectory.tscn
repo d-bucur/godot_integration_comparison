@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=18 format=3 uid="uid://dpu6ek7fvh71d"]
 
 [ext_resource type="Script" path="res://scripts/acceleration/gravity_const.gd" id="1_dbqga"]
+[ext_resource type="Script" path="res://scripts/test_setup.gd" id="1_hjxuc"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_i5pk7"]
 [ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_hwx7j"]
-[ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_gj0h8"]
+[ext_resource type="Script" path="res://scripts/controls.gd" id="3_i2gli"]
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_b7uag"]
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_5mrdu"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="8_bbqsc"]
@@ -23,8 +24,15 @@
 position = Vector2(480, -364)
 zoom = Vector2(0.292, 0.292)
 
+[node name="TestSetup" type="Node" parent="."]
+script = ExtResource("1_hjxuc")
+tps = 30
+
 [node name="ConstGravity" type="Node" parent="."]
 script = ExtResource("1_dbqga")
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("3_i2gli")
 
 [node name="Ground" type="Node2D" parent="."]
 position = Vector2(483, 637)
@@ -54,12 +62,12 @@ text = "ERB"
 [node name="ConstantG" type="Node" parent="EngineRigidbody"]
 script = ExtResource("9_tkcov")
 
-[node name="TestMonitor" type="Node" parent="EngineRigidbody" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="EngineRigidbody" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "engine_rb"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="Euler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 process_priority = 1
@@ -82,12 +90,12 @@ offset_bottom = -28.0
 theme = ExtResource("12_jk24s")
 text = "EUL"
 
-[node name="TestMonitor" type="Node" parent="Euler" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="Euler" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "euler"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="SymplecticEuler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 process_priority = 1
@@ -110,12 +118,12 @@ offset_bottom = -28.0
 theme = ExtResource("12_jk24s")
 text = "SIE"
 
-[node name="TestMonitor" type="Node" parent="SymplecticEuler" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="SymplecticEuler" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "sie"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.721569, 0.203922, 0.878431, 1)
@@ -137,12 +145,12 @@ offset_bottom = -1.0
 theme = ExtResource("12_jk24s")
 text = "VVE"
 
-[node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "verlet"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.878431, 0.788235, 0.203922, 1)
@@ -165,12 +173,12 @@ theme = ExtResource("12_jk24s")
 text = "MDP
 "
 
-[node name="TestMonitor" type="Node" parent="Midpoint" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="Midpoint" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "midpoint"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.203922, 0.211765, 0.878431, 1)
@@ -192,12 +200,12 @@ offset_bottom = 30.0
 theme = ExtResource("12_jk24s")
 text = "LPF"
 
-[node name="TestMonitor" type="Node" parent="Leapfrog" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="Leapfrog" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "leapfrog"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.878431, 0.203922, 0.203922, 1)
@@ -219,12 +227,12 @@ offset_bottom = 59.0
 theme = ExtResource("12_jk24s")
 text = "RK4"
 
-[node name="TestMonitor" type="Node" parent="RK4" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="RK4" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "rk4"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="ForestRuth" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.878431, 0.486275, 0.203922, 1)
@@ -246,12 +254,12 @@ offset_bottom = 59.0
 theme = ExtResource("12_jk24s")
 text = "FR"
 
-[node name="TestMonitor" type="Node" parent="ForestRuth" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="ForestRuth" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "fr"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
 
 [node name="PEFRL" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.203922, 0.878431, 0.686275, 1)
@@ -273,9 +281,9 @@ offset_bottom = 59.0
 theme = ExtResource("12_jk24s")
 text = "PEFRL"
 
-[node name="TestMonitor" type="Node" parent="PEFRL" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="PEFRL" node_paths=PackedStringArray("target", "finish_line", "setup")]
 script = ExtResource("2_hwx7j")
 method_name = "pefrl"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+setup = NodePath("../../TestSetup")
