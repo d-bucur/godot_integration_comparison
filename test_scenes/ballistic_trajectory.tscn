@@ -1,16 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpu6ek7fvh71d"]
+[gd_scene load_steps=17 format=3 uid="uid://dpu6ek7fvh71d"]
 
 [ext_resource type="Script" path="res://scripts/acceleration/gravity_const.gd" id="1_dbqga"]
 [ext_resource type="Texture2D" uid="uid://dyidx7utgs7gj" path="res://icon.svg" id="1_i5pk7"]
 [ext_resource type="Script" path="res://scripts/test_monitor.gd" id="2_hwx7j"]
 [ext_resource type="Resource" uid="uid://bnrhcmxvb3sfg" path="res://test_scenes/test_setup.tres" id="3_gj0h8"]
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_b7uag"]
-[ext_resource type="Script" path="res://scripts/trail.gd" id="4_fnky3"]
-[ext_resource type="Script" path="res://scripts/integrators/verlet_integrator_const.gd" id="5_c1puo"]
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_5mrdu"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="8_bbqsc"]
 [ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="9_iw8r6"]
-[ext_resource type="Script" path="res://scripts/const_gravitation.gd" id="9_tkcov"]
+[ext_resource type="Script" path="res://scripts/acceleration/active/const_gravitation.gd" id="9_tkcov"]
+[ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="11_0usyl"]
+[ext_resource type="Theme" uid="uid://qlwoo64gl4hg" path="res://label_theme.tres" id="12_jk24s"]
+[ext_resource type="Script" path="res://scripts/integrators/midpoint_integrator.gd" id="13_jtbrg"]
+[ext_resource type="Script" path="res://scripts/integrators/leapfrog_integrator.gd" id="14_ofdkk"]
+[ext_resource type="Script" path="res://scripts/integrators/rk4_integrator.gd" id="15_rc28c"]
+[ext_resource type="Script" path="res://scripts/integrators/fr_integrator.gd" id="16_gteep"]
+[ext_resource type="Script" path="res://scripts/integrators/pefrl_integrator.gd" id="17_of2vh"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -18,7 +23,7 @@
 position = Vector2(480, -364)
 zoom = Vector2(0.292, 0.292)
 
-[node name="Gravity" type="Node" parent="."]
+[node name="ConstGravity" type="Node" parent="."]
 script = ExtResource("1_dbqga")
 
 [node name="Ground" type="Node2D" parent="."]
@@ -28,114 +33,249 @@ scale = Vector2(11.64, -0.12)
 [node name="Sprite2D" type="Sprite2D" parent="Ground"]
 texture = ExtResource("1_i5pk7")
 
-[node name="EngineDefault" type="RigidBody2D" parent="."]
+[node name="EngineRigidbody" type="RigidBody2D" parent="."]
+process_priority = 1
 position = Vector2(294, 589)
 linear_velocity = Vector2(200, -2000)
 
-[node name="TestMonitor" type="Node" parent="EngineDefault" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_hwx7j")
-method_name = "engine_default"
-target = NodePath("..")
-finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
+[node name="ObjectSprite" parent="EngineRigidbody" instance=ExtResource("11_0usyl")]
 
-[node name="Sprite2D" type="Sprite2D" parent="EngineDefault"]
-texture = ExtResource("1_i5pk7")
+[node name="Trail" parent="EngineRigidbody" instance=ExtResource("4_b7uag")]
 
-[node name="Trail" parent="EngineDefault" instance=ExtResource("4_b7uag")]
+[node name="Label" type="Label" parent="EngineRigidbody"]
+z_index = 200
+offset_left = -27.0
+offset_top = -54.0
+offset_right = 13.0
+offset_bottom = -28.0
+theme = ExtResource("12_jk24s")
+text = "ERB"
 
-[node name="ConstantG" type="Node" parent="EngineDefault"]
+[node name="ConstantG" type="Node" parent="EngineRigidbody"]
 script = ExtResource("9_tkcov")
 
-[node name="VelocityVerletConst" type="Node2D" parent="."]
-visible = false
-modulate = Color(1, 0.282353, 1, 1)
-position = Vector2(294, 589)
-script = ExtResource("5_c1puo")
-
-[node name="TestMonitor" type="Node" parent="VelocityVerletConst" node_paths=PackedStringArray("target", "finish_line")]
+[node name="TestMonitor" type="Node" parent="EngineRigidbody" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_hwx7j")
-method_name = "velocity_verlet_const"
+method_name = "engine_rb"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
 setup = ExtResource("3_gj0h8")
 
-[node name="Sprite2D" type="Sprite2D" parent="VelocityVerletConst"]
-texture = ExtResource("1_i5pk7")
-
-[node name="Trail" type="Line2D" parent="VelocityVerletConst"]
-modulate = Color(1, 0.282353, 1, 0.376471)
-top_level = true
-script = ExtResource("4_fnky3")
-
-[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-modulate = Color(0.129412, 0.282353, 1, 1)
-position = Vector2(294, 589)
-script = ExtResource("7_5mrdu")
-acceleration = NodePath("../Gravity")
-
-[node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_hwx7j")
-method_name = "velocity_verlet"
-target = NodePath("..")
-finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
-
-[node name="Sprite2D" type="Sprite2D" parent="VelocityVerlet"]
-texture = ExtResource("1_i5pk7")
-
-[node name="Trail" type="Line2D" parent="VelocityVerlet"]
-modulate = Color(1, 0.282353, 1, 1)
-top_level = true
-default_color = Color(0.129412, 0.282353, 1, 0.376471)
-script = ExtResource("4_fnky3")
-
-[node name="SymplecticEuler" type="Node2D" parent="."]
+[node name="Euler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 process_priority = 1
-modulate = Color(0.552941, 1, 0.431373, 1)
-position = Vector2(294, 589)
-script = ExtResource("8_bbqsc")
-
-[node name="TestMonitor" type="Node" parent="SymplecticEuler" node_paths=PackedStringArray("target", "finish_line")]
-script = ExtResource("2_hwx7j")
-method_name = "symplectic_euler"
-target = NodePath("..")
-finish_line = NodePath("../../Ground")
-setup = ExtResource("3_gj0h8")
-
-[node name="Sprite2D" type="Sprite2D" parent="SymplecticEuler"]
-texture = ExtResource("1_i5pk7")
-
-[node name="Trail" type="Line2D" parent="SymplecticEuler"]
-modulate = Color(1, 0.282353, 1, 1)
-top_level = true
-default_color = Color(0.552941, 1, 0.431373, 0.321569)
-script = ExtResource("4_fnky3")
-
-[node name="ConstantG" type="Node" parent="SymplecticEuler"]
-script = ExtResource("9_tkcov")
-
-[node name="SimpleEuler" type="Node2D" parent="."]
-process_priority = 1
-modulate = Color(1, 0.952941, 0.431373, 1)
+modulate = Color(0.462745, 1, 0.231373, 1)
 position = Vector2(294, 589)
 script = ExtResource("9_iw8r6")
+acceleration = NodePath("../ConstGravity")
 
-[node name="TestMonitor" type="Node" parent="SimpleEuler" node_paths=PackedStringArray("target", "finish_line")]
+[node name="ObjectSprite" parent="Euler" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="Euler" instance=ExtResource("4_b7uag")]
+default_color = Color(0.462745, 1, 0.231373, 0.105882)
+
+[node name="Label" type="Label" parent="Euler"]
+z_index = 200
+offset_left = -65.0
+offset_top = -54.0
+offset_right = -25.0
+offset_bottom = -28.0
+theme = ExtResource("12_jk24s")
+text = "EUL"
+
+[node name="TestMonitor" type="Node" parent="Euler" node_paths=PackedStringArray("target", "finish_line")]
 script = ExtResource("2_hwx7j")
 method_name = "euler"
 target = NodePath("..")
 finish_line = NodePath("../../Ground")
 setup = ExtResource("3_gj0h8")
 
-[node name="Sprite2D" type="Sprite2D" parent="SimpleEuler"]
-texture = ExtResource("1_i5pk7")
+[node name="SymplecticEuler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.231373, 1, 0.988235, 1)
+position = Vector2(294, 589)
+script = ExtResource("8_bbqsc")
+acceleration = NodePath("../ConstGravity")
 
-[node name="Trail" type="Line2D" parent="SimpleEuler"]
-modulate = Color(1, 0.282353, 1, 1)
-top_level = true
-default_color = Color(1, 0.952941, 0.431373, 0.372549)
-script = ExtResource("4_fnky3")
+[node name="ObjectSprite" parent="SymplecticEuler" instance=ExtResource("11_0usyl")]
 
-[node name="ConstantG" type="Node" parent="SimpleEuler"]
-script = ExtResource("9_tkcov")
+[node name="Trail" parent="SymplecticEuler" instance=ExtResource("4_b7uag")]
+default_color = Color(0.231373, 1, 0.988235, 0.0666667)
+
+[node name="Label" type="Label" parent="SymplecticEuler"]
+z_index = 200
+offset_left = 13.0
+offset_top = -54.0
+offset_right = 53.0
+offset_bottom = -28.0
+theme = ExtResource("12_jk24s")
+text = "SIE"
+
+[node name="TestMonitor" type="Node" parent="SymplecticEuler" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "sie"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.721569, 0.203922, 0.878431, 1)
+position = Vector2(294, 589)
+script = ExtResource("7_5mrdu")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="VelocityVerlet" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="VelocityVerlet" instance=ExtResource("4_b7uag")]
+default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
+
+[node name="Label" type="Label" parent="VelocityVerlet"]
+z_index = 200
+offset_left = 36.0
+offset_top = -27.0
+offset_right = 76.0
+offset_bottom = -1.0
+theme = ExtResource("12_jk24s")
+text = "VVE"
+
+[node name="TestMonitor" type="Node" parent="VelocityVerlet" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "verlet"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.788235, 0.203922, 1)
+position = Vector2(294, 589)
+script = ExtResource("13_jtbrg")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="Midpoint" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="Midpoint" instance=ExtResource("4_b7uag")]
+default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
+
+[node name="Label" type="Label" parent="Midpoint"]
+z_index = 200
+offset_left = -71.0
+offset_top = -12.0
+offset_right = -31.0
+offset_bottom = 14.0
+theme = ExtResource("12_jk24s")
+text = "MDP
+"
+
+[node name="TestMonitor" type="Node" parent="Midpoint" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "midpoint"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.211765, 0.878431, 1)
+position = Vector2(294, 589)
+script = ExtResource("14_ofdkk")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="Leapfrog" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="Leapfrog" instance=ExtResource("4_b7uag")]
+default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
+
+[node name="Label" type="Label" parent="Leapfrog"]
+z_index = 200
+offset_left = 36.0
+offset_top = 4.0
+offset_right = 76.0
+offset_bottom = 30.0
+theme = ExtResource("12_jk24s")
+text = "LPF"
+
+[node name="TestMonitor" type="Node" parent="Leapfrog" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "leapfrog"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.203922, 0.203922, 1)
+position = Vector2(294, 589)
+script = ExtResource("15_rc28c")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="RK4" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="RK4" instance=ExtResource("4_b7uag")]
+default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
+
+[node name="Label" type="Label" parent="RK4"]
+z_index = 200
+offset_left = -67.0
+offset_top = 33.0
+offset_right = -27.0
+offset_bottom = 59.0
+theme = ExtResource("12_jk24s")
+text = "RK4"
+
+[node name="TestMonitor" type="Node" parent="RK4" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "rk4"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="ForestRuth" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.486275, 0.203922, 1)
+position = Vector2(294, 589)
+script = ExtResource("16_gteep")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="ForestRuth" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="ForestRuth" instance=ExtResource("4_b7uag")]
+default_color = Color(0.878431, 0.486275, 0.203922, 0.0627451)
+
+[node name="Label" type="Label" parent="ForestRuth"]
+z_index = 200
+offset_left = 32.0
+offset_top = 33.0
+offset_right = 72.0
+offset_bottom = 59.0
+theme = ExtResource("12_jk24s")
+text = "FR"
+
+[node name="TestMonitor" type="Node" parent="ForestRuth" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "fr"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")
+
+[node name="PEFRL" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.878431, 0.686275, 1)
+position = Vector2(294, 589)
+script = ExtResource("17_of2vh")
+acceleration = NodePath("../ConstGravity")
+
+[node name="ObjectSprite" parent="PEFRL" instance=ExtResource("11_0usyl")]
+
+[node name="Trail" parent="PEFRL" instance=ExtResource("4_b7uag")]
+default_color = Color(0.203922, 0.878431, 0.686275, 0.0627451)
+
+[node name="Label" type="Label" parent="PEFRL"]
+z_index = 200
+offset_left = -25.0
+offset_top = 33.0
+offset_right = 22.0
+offset_bottom = 59.0
+theme = ExtResource("12_jk24s")
+text = "PEFRL"
+
+[node name="TestMonitor" type="Node" parent="PEFRL" node_paths=PackedStringArray("target", "finish_line")]
+script = ExtResource("2_hwx7j")
+method_name = "pefrl"
+target = NodePath("..")
+finish_line = NodePath("../../Ground")
+setup = ExtResource("3_gj0h8")

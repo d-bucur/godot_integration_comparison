@@ -56,10 +56,10 @@ orbiting_body = NodePath("../../Sun")
 
 [node name="Label" type="Label" parent="EngineRigidbody"]
 z_index = 200
-offset_left = -33.0
-offset_top = -55.0
-offset_right = 7.0
-offset_bottom = -29.0
+offset_left = -27.0
+offset_top = -54.0
+offset_right = 13.0
+offset_bottom = -28.0
 theme = ExtResource("7_wubh1")
 text = "ERB"
 
@@ -78,9 +78,9 @@ default_color = Color(0.462745, 1, 0.231373, 0.105882)
 
 [node name="Label" type="Label" parent="Euler"]
 z_index = 200
-offset_left = -71.0
+offset_left = -65.0
 offset_top = -54.0
-offset_right = -31.0
+offset_right = -25.0
 offset_bottom = -28.0
 theme = ExtResource("7_wubh1")
 text = "EUL"
@@ -100,16 +100,16 @@ default_color = Color(0.231373, 1, 0.988235, 0.0666667)
 
 [node name="Label" type="Label" parent="SymplecticEuler"]
 z_index = 200
-offset_left = 6.0
-offset_top = -55.0
-offset_right = 46.0
-offset_bottom = -29.0
+offset_left = 13.0
+offset_top = -54.0
+offset_right = 53.0
+offset_bottom = -28.0
 theme = ExtResource("7_wubh1")
 text = "SIE"
 
 [node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 modulate = Color(0.721569, 0.203922, 0.878431, 1)
-position = Vector2(420, 3)
+position = Vector2(420, 0)
 script = ExtResource("7_o76uq")
 linear_velocity = Vector2(0, -350)
 acceleration = NodePath("../GravitySun")
@@ -121,10 +121,10 @@ default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
 
 [node name="Label" type="Label" parent="VelocityVerlet"]
 z_index = 200
-offset_left = 40.0
-offset_top = -34.0
-offset_right = 80.0
-offset_bottom = -8.0
+offset_left = 36.0
+offset_top = -27.0
+offset_right = 76.0
+offset_bottom = -1.0
 theme = ExtResource("7_wubh1")
 text = "VVE"
 
@@ -142,9 +142,9 @@ default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
 
 [node name="Label" type="Label" parent="Midpoint"]
 z_index = 200
-offset_left = -76.0
+offset_left = -71.0
 offset_top = -12.0
-offset_right = -36.0
+offset_right = -31.0
 offset_bottom = 14.0
 theme = ExtResource("7_wubh1")
 text = "MDP
@@ -164,9 +164,9 @@ default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
 
 [node name="Label" type="Label" parent="Leapfrog"]
 z_index = 200
-offset_left = 40.0
+offset_left = 36.0
 offset_top = 4.0
-offset_right = 80.0
+offset_right = 76.0
 offset_bottom = 30.0
 theme = ExtResource("7_wubh1")
 text = "LPF"
@@ -185,10 +185,10 @@ default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
 
 [node name="Label" type="Label" parent="RK4"]
 z_index = 200
-offset_left = -72.0
-offset_top = 42.0
-offset_right = -32.0
-offset_bottom = 68.0
+offset_left = -67.0
+offset_top = 33.0
+offset_right = -27.0
+offset_bottom = 59.0
 theme = ExtResource("7_wubh1")
 text = "RK4"
 
@@ -206,10 +206,10 @@ default_color = Color(0.878431, 0.486275, 0.203922, 0.0627451)
 
 [node name="Label" type="Label" parent="ForestRuth"]
 z_index = 200
-offset_left = 40.0
-offset_top = 41.0
-offset_right = 80.0
-offset_bottom = 67.0
+offset_left = 32.0
+offset_top = 33.0
+offset_right = 72.0
+offset_bottom = 59.0
 theme = ExtResource("7_wubh1")
 text = "FR"
 
@@ -228,8 +228,8 @@ default_color = Color(0.203922, 0.878431, 0.686275, 0.0627451)
 [node name="Label" type="Label" parent="PEFRL"]
 z_index = 200
 offset_left = -25.0
-offset_top = 42.0
+offset_top = 33.0
 offset_right = 22.0
-offset_bottom = 68.0
+offset_bottom = 59.0
 theme = ExtResource("7_wubh1")
 text = "PEFRL"
