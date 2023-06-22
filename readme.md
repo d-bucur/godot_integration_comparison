@@ -6,15 +6,15 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 | Basic Euler                    | ❌             | O(Δt)       | ❌             | 1                    |
 | Symplectic Euler / Rigidbody2D | ✔️             | O(Δt)       | ❌             | 1                    |
 | Velocity Verlet                | ✔️             | O(Δt^2)     | ✔️             | 1[^4]                |
-| Leapfrog                       | ✔️             | O(Δt^2)     | ❔             | 1[^4]                |
-| Midpoint                       | ❔             | O(Δt^2)     | ❌             | 2                    |
+| Leapfrog                       | ✔️             | O(Δt^2)     | ❌             | 1[^4]                |
+| Midpoint                       | ❌             | O(Δt^2)     | ❌             | 2                    |
 | RK4                            | ❌             | O(Δt^4)     | ❔             | 4                    |
-
+| Forest Ruth                    | ✔️             | O(Δt^4)     | ✔️             | 3                    |
 
 
 [^1]: The system conserves energy if the underlying system does (ie. planets orbit does not change total energy)
 
-[^2]: Actual number is doubled if integrating both acceleration and velocity
+[^2]: Actual number is doubled if integrating both acceleration and velocity. Note that this is not an accurate indicator of performance
 
 [^3]: Is the error constant with a variable timestep? While a workaround is to have a fixed timestep, this is still a preferred property that enables changing the speed of the simulation at runtime
 
@@ -25,8 +25,10 @@ Testing scenarios:
 - Orbital mechanics - acceleration depends on position
 
 ## TODO
+- FR([ForestRust](https://en.wikipedia.org/wiki/Symplectic_integrator#A_fourth-order_example))/PEFRL/yoshida
 - normalize acceleration sampling in all tests
 - update tests and results
+- new tests: harmonic oscillator/battle royale
 
 [Results (preliminary)](results.md) - comparison and errors from analytical solutions
 

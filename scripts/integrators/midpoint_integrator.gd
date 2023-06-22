@@ -16,7 +16,7 @@ func _physics_process(dt: float) -> void:
 	position += dt * (linear_velocity + 0.5 * dv1)
 	linear_velocity += dv2
 
-	# not midpoint, but follows verlet closely. what the hell is this?
+	# TODO not midpoint, but follows verlet closely. what the hell is this?
 	# var accel = acceleration.eval(dt_half, position + dt_half * linear_velocity)
 	# position += dt * (linear_velocity + accel * dt_half)
 	# linear_velocity = linear_velocity + dt * accel

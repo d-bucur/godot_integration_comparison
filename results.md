@@ -15,7 +15,7 @@ TODO use Kepler to measure errors
 - Euler: completely innacurate, error increases with each timestep
 - Midpoint: orbital period increases like in Euler, just slower. This happens because the error accumulates when the slope of the function does not change sign, causing it to gain energy
 - Symplectic Euler: serviceable, but gains energy when varying timestep
-- Velocity Verlet: conserves energy, even at varying timesteps, but becauase of innacuracy the orbit rotates around the focal point. 
+- Velocity Verlet: conserves energy, even at varying timesteps, but becauase of innacuracy the orbit rotates around the focal point [^2]
 - Leapfrog: should be similar to symplectic euler, but the velocity and positions are staggered
 - RK4: even more drift than VV, doesn't conserve energy, maybe something wrong with implementation or test
 
@@ -28,3 +28,5 @@ TODO use Kepler to measure errors
 - RK4: huge amount of operations and will still drift over long times. Only use if short burst accurate results are needed
 
 [^1]: ticks per second (fixed timestep). Δt = 1s/tps
+
+[^2]: This is a real life effect called apsidal precession, but probably shouldn't happen in a [two body problem](https://en.wikipedia.org/wiki/Two-body_problem_in_general_relativity#Apsidal_precession). It is explained by [relativity](https://en.wikipedia.org/wiki/Apsidal_precession#General_relativity) but relativity is not simulated here so this is probably due to inaccuracy
