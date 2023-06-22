@@ -4,9 +4,9 @@ extends Node2D
 @export var acceleration: AccelerationProvider
 
 var sleeping := false
-var lambda := -0.2123418310626054 # λ
-var xi := 0.1786178958448091 # ξ
-var chi := -0.06626458266981849 # χ
+const lambda := -0.2123418310626054 # λ
+const xi := 0.1786178958448091 # ξ
+const chi := -0.06626458266981849 # χ
 
 func _physics_process(dt: float) -> void:
 	if sleeping:

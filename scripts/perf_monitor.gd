@@ -1,14 +1,15 @@
 extends Node
 
-var profiling_enabled := true
+var profiling_enabled := false
+var results_interval_msec := 5000
 var logs: Dictionary
 var last_log: float
 
-func _process(delta):
+func _process(_delta):
 	if not profiling_enabled:
 		return
 		
-	if Time.get_ticks_msec() - last_log < 5000:
+	if Time.get_ticks_msec() - last_log < results_interval_msec:
 		return
 	for k in logs.keys():
 		var avg = get_avg(k)

@@ -32,7 +32,6 @@ Testing scenarios:
 [References](references.md)
 
 ## Possible improvements
-- normalize acceleration sampling in all tests
 - update tests and results
 - new tests: harmonic oscillator/battle royale
 - Yoshida integrator

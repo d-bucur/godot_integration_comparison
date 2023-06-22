@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="2_fbk44"]
 [ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="2_r3xqh"]
 [ext_resource type="Script" path="res://scripts/acceleration/gravity_single_body.gd" id="2_sjpon"]
-[ext_resource type="Script" path="res://scripts/universal_gravitation.gd" id="3_eofqs"]
 [ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="4_4bhd8"]
+[ext_resource type="Script" path="res://scripts/acceleration/active/universal_gravitation.gd" id="5_6ipoo"]
 [ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="5_uhuo6"]
 [ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="7_o76uq"]
 [ext_resource type="Theme" uid="uid://qlwoo64gl4hg" path="res://label_theme.tres" id="7_wubh1"]
@@ -19,12 +19,15 @@
 
 [node name="orbital_comparison" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.41, 0.41)
+
 [node name="TestSetup" type="Node" parent="."]
 script = ExtResource("1_qu4ds")
 tps = 60
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.41, 0.41)
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("10_gcf3c")
 
 [node name="Sun" type="Node2D" parent="."]
 
@@ -39,14 +42,13 @@ orbiting_body = NodePath("../Sun")
 
 [node name="EngineRigidbody" type="RigidBody2D" parent="."]
 process_priority = 1
-visible = false
 position = Vector2(420, 0)
 linear_velocity = Vector2(0, -350)
 
 [node name="ObjectSprite" parent="EngineRigidbody" instance=ExtResource("2_r3xqh")]
 
 [node name="Gravity" type="Node2D" parent="EngineRigidbody" node_paths=PackedStringArray("orbiting_body")]
-script = ExtResource("3_eofqs")
+script = ExtResource("5_6ipoo")
 G = 1e+08
 orbiting_body = NodePath("../../Sun")
 
@@ -54,70 +56,60 @@ orbiting_body = NodePath("../../Sun")
 
 [node name="Label" type="Label" parent="EngineRigidbody"]
 z_index = 200
-offset_left = 34.0
-offset_top = -57.0
-offset_right = 74.0
-offset_bottom = -31.0
+offset_left = -33.0
+offset_top = -55.0
+offset_right = 7.0
+offset_bottom = -29.0
 theme = ExtResource("7_wubh1")
 text = "ERB"
 
-[node name="Euler" type="Node2D" parent="."]
+[node name="Euler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 process_priority = 1
-visible = false
 modulate = Color(0.462745, 1, 0.231373, 1)
 position = Vector2(420, 0)
 script = ExtResource("2_fbk44")
 linear_velocity = Vector2(0, -350)
+acceleration = NodePath("../GravitySun")
 
 [node name="ObjectSprite" parent="Euler" instance=ExtResource("2_r3xqh")]
-
-[node name="Gravity" type="Node2D" parent="Euler" node_paths=PackedStringArray("orbiting_body")]
-script = ExtResource("3_eofqs")
-G = 1e+08
-orbiting_body = NodePath("../../Sun")
 
 [node name="Trail" parent="Euler" instance=ExtResource("4_4bhd8")]
 default_color = Color(0.462745, 1, 0.231373, 0.105882)
 
 [node name="Label" type="Label" parent="Euler"]
 z_index = 200
-offset_left = 30.0
-offset_top = 37.0
-offset_right = 70.0
-offset_bottom = 63.0
+offset_left = -71.0
+offset_top = -54.0
+offset_right = -31.0
+offset_bottom = -28.0
 theme = ExtResource("7_wubh1")
 text = "EUL"
 
-[node name="SymplecticEuler" type="Node2D" parent="."]
+[node name="SymplecticEuler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
 process_priority = 1
-visible = false
 modulate = Color(0.231373, 1, 0.988235, 1)
 position = Vector2(420, 0)
 script = ExtResource("5_uhuo6")
 linear_velocity = Vector2(0, -350)
+acceleration = NodePath("../GravitySun")
 
 [node name="ObjectSprite" parent="SymplecticEuler" instance=ExtResource("2_r3xqh")]
-
-[node name="Gravity" type="Node2D" parent="SymplecticEuler" node_paths=PackedStringArray("orbiting_body")]
-script = ExtResource("3_eofqs")
-G = 1e+08
-orbiting_body = NodePath("../../Sun")
 
 [node name="Trail" parent="SymplecticEuler" instance=ExtResource("4_4bhd8")]
 default_color = Color(0.231373, 1, 0.988235, 0.0666667)
 
 [node name="Label" type="Label" parent="SymplecticEuler"]
 z_index = 200
-offset_top = 37.0
-offset_right = 40.0
-offset_bottom = 63.0
+offset_left = 6.0
+offset_top = -55.0
+offset_right = 46.0
+offset_bottom = -29.0
 theme = ExtResource("7_wubh1")
 text = "SIE"
 
 [node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.721569, 0.203922, 0.878431, 1)
-position = Vector2(420, 0)
+position = Vector2(420, 3)
 script = ExtResource("7_o76uq")
 linear_velocity = Vector2(0, -350)
 acceleration = NodePath("../GravitySun")
@@ -129,14 +121,14 @@ default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
 
 [node name="Label" type="Label" parent="VelocityVerlet"]
 z_index = 200
-offset_top = -59.0
-offset_right = 40.0
-offset_bottom = -33.0
+offset_left = 40.0
+offset_top = -34.0
+offset_right = 80.0
+offset_bottom = -8.0
 theme = ExtResource("7_wubh1")
 text = "VVE"
 
 [node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.878431, 0.788235, 0.203922, 1)
 position = Vector2(420, 0)
 script = ExtResource("10_bg512")
@@ -150,16 +142,15 @@ default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
 
 [node name="Label" type="Label" parent="Midpoint"]
 z_index = 200
-offset_left = -47.0
-offset_top = -59.0
-offset_right = -7.0
-offset_bottom = -33.0
+offset_left = -76.0
+offset_top = -12.0
+offset_right = -36.0
+offset_bottom = 14.0
 theme = ExtResource("7_wubh1")
 text = "MDP
 "
 
 [node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.203922, 0.211765, 0.878431, 1)
 position = Vector2(420, 0)
 script = ExtResource("12_yo03e")
@@ -173,15 +164,14 @@ default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
 
 [node name="Label" type="Label" parent="Leapfrog"]
 z_index = 200
-offset_left = -47.0
-offset_top = 35.0
-offset_right = -7.0
-offset_bottom = 61.0
+offset_left = 40.0
+offset_top = 4.0
+offset_right = 80.0
+offset_bottom = 30.0
 theme = ExtResource("7_wubh1")
 text = "LPF"
 
 [node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.878431, 0.203922, 0.203922, 1)
 position = Vector2(420, 0)
 script = ExtResource("11_dbks0")
@@ -195,15 +185,14 @@ default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
 
 [node name="Label" type="Label" parent="RK4"]
 z_index = 200
-offset_left = -73.0
-offset_top = -9.0
-offset_right = -33.0
-offset_bottom = 17.0
+offset_left = -72.0
+offset_top = 42.0
+offset_right = -32.0
+offset_bottom = 68.0
 theme = ExtResource("7_wubh1")
 text = "RK4"
 
 [node name="ForestRuth" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.878431, 0.486275, 0.203922, 1)
 position = Vector2(420, 0)
 script = ExtResource("14_xauia")
@@ -217,15 +206,14 @@ default_color = Color(0.878431, 0.486275, 0.203922, 0.0627451)
 
 [node name="Label" type="Label" parent="ForestRuth"]
 z_index = 200
-offset_left = 44.0
-offset_top = 3.0
-offset_right = 84.0
-offset_bottom = 29.0
+offset_left = 40.0
+offset_top = 41.0
+offset_right = 80.0
+offset_bottom = 67.0
 theme = ExtResource("7_wubh1")
 text = "FR"
 
 [node name="PEFRL" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
-visible = false
 modulate = Color(0.203922, 0.878431, 0.686275, 1)
 position = Vector2(420, 0)
 script = ExtResource("15_rpwka")
@@ -239,12 +227,9 @@ default_color = Color(0.203922, 0.878431, 0.686275, 0.0627451)
 
 [node name="Label" type="Label" parent="PEFRL"]
 z_index = 200
-offset_left = 44.0
-offset_top = -30.0
-offset_right = 91.0
-offset_bottom = -4.0
+offset_left = -25.0
+offset_top = 42.0
+offset_right = 22.0
+offset_bottom = 68.0
 theme = ExtResource("7_wubh1")
 text = "PEFRL"
-
-[node name="Controls" type="Node" parent="."]
-script = ExtResource("10_gcf3c")

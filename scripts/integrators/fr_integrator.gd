@@ -4,7 +4,7 @@ extends Node2D
 @export var acceleration: AccelerationProvider
 
 var sleeping := false
-var theta := 1.351207191959657634047687
+const theta := 1.351207191959657634047687
 @onready var theta_1 := 1 - theta
 @onready var theta_2 := 1 - 2 * theta
 
