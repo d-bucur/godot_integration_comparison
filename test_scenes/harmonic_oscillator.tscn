@@ -1,0 +1,203 @@
+[gd_scene load_steps=15 format=3 uid="uid://ix8rv3xdqax8"]
+
+[ext_resource type="Script" path="res://scripts/test_setup2.gd" id="1_tb5ec"]
+[ext_resource type="Script" path="res://scripts/controls.gd" id="2_5n5ws"]
+[ext_resource type="Script" path="res://scripts/acceleration/oscillator.gd" id="4_855jy"]
+[ext_resource type="Script" path="res://scripts/integrators/euler_integrator.gd" id="5_kr887"]
+[ext_resource type="PackedScene" uid="uid://bwc3hs2gx4rt1" path="res://prefabs/object_sprite.tscn" id="6_yqjl1"]
+[ext_resource type="PackedScene" uid="uid://prwmsvdvapqv" path="res://prefabs/trail.tscn" id="7_icewh"]
+[ext_resource type="Theme" uid="uid://qlwoo64gl4hg" path="res://label_theme.tres" id="8_5so0u"]
+[ext_resource type="Script" path="res://scripts/integrators/symplectic_euler_integrator.gd" id="9_dkl5q"]
+[ext_resource type="Script" path="res://scripts/integrators/velocity_verlet_integrator.gd" id="10_3tvff"]
+[ext_resource type="Script" path="res://scripts/integrators/midpoint_integrator.gd" id="11_7ubd0"]
+[ext_resource type="Script" path="res://scripts/integrators/leapfrog_integrator.gd" id="12_spaay"]
+[ext_resource type="Script" path="res://scripts/integrators/rk4_integrator.gd" id="13_0om6m"]
+[ext_resource type="Script" path="res://scripts/integrators/fr_integrator.gd" id="14_tubjb"]
+[ext_resource type="Script" path="res://scripts/integrators/pefrl_integrator.gd" id="15_633i8"]
+
+[node name="orbital_comparison" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.41, 0.41)
+
+[node name="TestSetup" type="Node" parent="."]
+script = ExtResource("1_tb5ec")
+tps = 60
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("2_5n5ws")
+
+[node name="Oscillator" type="Node" parent="."]
+script = ExtResource("4_855jy")
+k = 100.0
+
+[node name="Euler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.462745, 1, 0.231373, 1)
+position = Vector2(1157, 597)
+script = ExtResource("5_kr887")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="Euler" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="Euler" instance=ExtResource("7_icewh")]
+default_color = Color(0.462745, 1, 0.231373, 0.105882)
+
+[node name="Label" type="Label" parent="Euler"]
+z_index = 200
+offset_left = -65.0
+offset_top = -54.0
+offset_right = -25.0
+offset_bottom = -28.0
+theme = ExtResource("8_5so0u")
+text = "EUL"
+
+[node name="SymplecticEuler" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+process_priority = 1
+modulate = Color(0.231373, 1, 0.988235, 1)
+position = Vector2(1157, 597)
+script = ExtResource("9_dkl5q")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="SymplecticEuler" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="SymplecticEuler" instance=ExtResource("7_icewh")]
+default_color = Color(0.231373, 1, 0.988235, 0.0666667)
+
+[node name="Label" type="Label" parent="SymplecticEuler"]
+z_index = 200
+offset_left = 13.0
+offset_top = -54.0
+offset_right = 53.0
+offset_bottom = -28.0
+theme = ExtResource("8_5so0u")
+text = "SIE"
+
+[node name="VelocityVerlet" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.721569, 0.203922, 0.878431, 1)
+position = Vector2(1157, 597)
+script = ExtResource("10_3tvff")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="VelocityVerlet" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="VelocityVerlet" instance=ExtResource("7_icewh")]
+default_color = Color(0.721569, 0.203922, 0.878431, 0.14902)
+
+[node name="Label" type="Label" parent="VelocityVerlet"]
+z_index = 200
+offset_left = 36.0
+offset_top = -27.0
+offset_right = 76.0
+offset_bottom = -1.0
+theme = ExtResource("8_5so0u")
+text = "VVE"
+
+[node name="Midpoint" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.788235, 0.203922, 1)
+position = Vector2(1157, 597)
+script = ExtResource("11_7ubd0")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="Midpoint" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="Midpoint" instance=ExtResource("7_icewh")]
+default_color = Color(0.878431, 0.788235, 0.203922, 0.0509804)
+
+[node name="Label" type="Label" parent="Midpoint"]
+z_index = 200
+offset_left = -71.0
+offset_top = -12.0
+offset_right = -31.0
+offset_bottom = 14.0
+theme = ExtResource("8_5so0u")
+text = "MDP
+"
+
+[node name="Leapfrog" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.211765, 0.878431, 1)
+position = Vector2(1157, 597)
+script = ExtResource("12_spaay")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="Leapfrog" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="Leapfrog" instance=ExtResource("7_icewh")]
+default_color = Color(0.203922, 0.211765, 0.878431, 0.0666667)
+
+[node name="Label" type="Label" parent="Leapfrog"]
+z_index = 200
+offset_left = 36.0
+offset_top = 4.0
+offset_right = 76.0
+offset_bottom = 30.0
+theme = ExtResource("8_5so0u")
+text = "LPF"
+
+[node name="RK4" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.203922, 0.203922, 1)
+position = Vector2(1157, 597)
+script = ExtResource("13_0om6m")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="RK4" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="RK4" instance=ExtResource("7_icewh")]
+default_color = Color(0.878431, 0.203922, 0.203922, 0.0588235)
+
+[node name="Label" type="Label" parent="RK4"]
+z_index = 200
+offset_left = -67.0
+offset_top = 33.0
+offset_right = -27.0
+offset_bottom = 59.0
+theme = ExtResource("8_5so0u")
+text = "RK4"
+
+[node name="ForestRuth" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.878431, 0.486275, 0.203922, 1)
+position = Vector2(1157, 597)
+script = ExtResource("14_tubjb")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="ForestRuth" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="ForestRuth" instance=ExtResource("7_icewh")]
+default_color = Color(0.878431, 0.486275, 0.203922, 0.0627451)
+
+[node name="Label" type="Label" parent="ForestRuth"]
+z_index = 200
+offset_left = 32.0
+offset_top = 33.0
+offset_right = 72.0
+offset_bottom = 59.0
+theme = ExtResource("8_5so0u")
+text = "FR"
+
+[node name="PEFRL" type="Node2D" parent="." node_paths=PackedStringArray("acceleration")]
+modulate = Color(0.203922, 0.878431, 0.686275, 1)
+position = Vector2(1157, 597)
+script = ExtResource("15_633i8")
+linear_velocity = Vector2(0, 0)
+acceleration = NodePath("../Oscillator")
+
+[node name="ObjectSprite" parent="PEFRL" instance=ExtResource("6_yqjl1")]
+
+[node name="Trail" parent="PEFRL" instance=ExtResource("7_icewh")]
+default_color = Color(0.203922, 0.878431, 0.686275, 0.0627451)
+
+[node name="Label" type="Label" parent="PEFRL"]
+z_index = 200
+offset_left = -25.0
+offset_top = 33.0
+offset_right = 22.0
+offset_bottom = 59.0
+theme = ExtResource("8_5so0u")
+text = "PEFRL"
