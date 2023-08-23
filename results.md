@@ -9,6 +9,8 @@
 - **Forest Ruth**: Great integrator with huge accuracy and decent performance. Stays very stable with little error over long periods and has the best performance of the order 4 integrators since it has way less operations. Honestly I have no idea why RK4 is so popular since this one seems better in every way
 - **PEFRL (Position Extended Forest-Ruth)**: Clear winner in terms of accuracy. Nothing I threw at this managed to bugde planets off the correct orbit. Not even wildly varying timesteps. It is theoretically the same order as FR, but in practice it is 26 (!!!) times more accurate with just a few more operations. If you have a not huge amount of objects and care about accuracy this is the safest bet.
 
+I also tried to do a proper benchmark of performance, but unfortunately GDScript has wildly varying performance and the results made no sense. In retrospect, this project should have been implemented in a proper language, but it started out as a small test from a Godot project I was working on.
+
 # Ballistic trajectory
 | method                | tps[^1] | max_x  | min_y (%err)   | time (%err)  |
 |-----------------------|-----|--------|----------------|--------------|
