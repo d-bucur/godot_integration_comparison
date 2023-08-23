@@ -13,6 +13,7 @@ func _physics_process(dt: float) -> void:
 		return
 	
 	PerfMonitor.log_start("fr")
+	# These could be cached if you assume a constant dt
 	var dt_half = dt * 0.5
 	var a = theta * dt
 	var b = theta * dt_half
@@ -24,7 +25,7 @@ func _physics_process(dt: float) -> void:
 	linear_velocity += a * acceleration.eval(a, position)
 	position += c * linear_velocity
 
-	linear_velocity += d * acceleration.eval(d, position) # this technically goes back in time
+	linear_velocity += d * acceleration.eval(d, position) # this technically goes back in time for the sample
 	position += c * linear_velocity
 
 	linear_velocity += a * acceleration.eval(a, position)

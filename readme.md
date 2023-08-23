@@ -1,5 +1,5 @@
 ## Description
-Testing different numerical integration methods for acceleration/velocity of 2D bodies in Godot.
+Comparison of different numerical integration methods for acceleration/velocity of 2D bodies in Godot.
 
 | method                         | symplectic[^1] | error order | variable Δt[^3] | samples per step[^2] |
 |--------------------------------|----------------|-------------|-----------------|----------------------|
@@ -13,26 +13,26 @@ Testing different numerical integration methods for acceleration/velocity of 2D 
 | PEFRL                          | ✔️             | O(Δt^4)[^5] | ✔️             | 4                    |
 
 
-[^1]: The system conserves energy if the underlying system does (ie. planets orbit does not change total energy)
+[^1]: The system conserves energy if the underlying system does (ie. planets orbit does not change total energy on average)
 
-[^2]: Actual number is doubled if integrating both acceleration and velocity. Note that this is not an accurate indicator of performance
+[^2]: Actual number is doubled when integrating both acceleration and velocity. Note that this is not an accurate indicator of performance, but a ballpark estimate
 
-[^3]: Is the error constant with a variable timestep? While a workaround is to have a fixed timestep, this is still a preferred property that enables changing the speed of the simulation at runtime and integrating at higher timesteps to predict the future. Is this just a consequence of the first two properties?
+[^3]: Is the error constant with a variable timestep? While a workaround is to have a fixed timestep, this is still a preferred property that enables changing the speed of the simulation at runtime and integrating at higher timesteps to predict the future. This might just be a consequence of the first two properties, so take it with a grain of salt.
 
 [^4]: Theoretically it's 2, but one sample can be cached from one frame to the next as it is the same value
 
-[^5]: order is the same, but in practice PEFRL is 26 times more accurate than FR (Forest Ruth)
+[^5]: order is the same, but in practice PEFRL is 26 times (!!!) more accurate than FR (Forest Ruth)
 
 Testing scenarios:
 - Ballistic trajectory - constant acceleration
 - Orbital mechanics - acceleration depends on position
 - Harmonic oscillator - acceleration depends on position
 
-[Results (preliminary)](results.md) - comparison and errors from analytical solutions
+[Analysis (in progress)](results.md) - A more detailed comparison based on this project research
 
-[References](references.md)
+[References](references.md) with more accurate mathematical descriptions of the techniques
 
 ## Possible improvements
-- update tests and results
+- Error analysis compared to analytical solution for orbital scene
 - Yoshida integrator
-- Adaptive timestep
+- Adaptive timestep techniques
