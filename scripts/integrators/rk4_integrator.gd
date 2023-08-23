@@ -9,6 +9,7 @@ func _physics_process(dt: float) -> void:
 	if sleeping:
 		return
 
+	# TODO https://gafferongames.com/post/integration_basics/ maybe this way or writing it is clearer
 	PerfMonitor.log_start("rk4")
 	var dt_half = dt * 0.5
 	var v1 = linear_velocity
