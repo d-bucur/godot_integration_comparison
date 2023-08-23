@@ -37,7 +37,7 @@ I also tried to do a proper benchmark of performance, but unfortunately GDScript
 A short ballistic trajectory like what you would use in a game is pretty simple and all the integrators perform virtually the same within a reasonable measurement error from the analytical solution (1-2%)
 
 # Orbital mechanics
-TODO use Kepler to measure errors
+TODO use Kepler to measure errors. Or check total energy (kinetic + potential) that should stay the same as the initial value
 
 ## Comments
 Mostly covered in [overall](#overall) section
