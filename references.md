@@ -21,7 +21,7 @@
   [principia](https://github.com/mockingbirdnest/Principia/blob/ca2948a74840c8c0416af83efce8f7ebebc6d430/documentation/ODEs%20and%20Runge-Kutta%20integrators.pdf)
   [4](https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/)
   [adaptive step](https://www.youtube.com/watch?v=JcRsGD2pKlA)
-- FR/PEFRL [1, last pages](https://young.physics.ucsc.edu/115/leapfrog.pdf)
+- FR/PEFRL [1, last pages](https://bpb-us-e1.wpmucdn.com/sites.ucsc.edu/dist/7/1905/files/2025/03/leapfrog.pdf)
 - yoshida 
   [1](https://fse.studenttheses.ub.rug.nl/20185/1/bMATH_2019_PimJC.pdf)
   [wiki](https://en.wikipedia.org/wiki/Leapfrog_integration#4th_order_Yoshida_integrator): like leapfrog but higher order
